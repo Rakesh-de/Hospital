@@ -1,0 +1,159 @@
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+.dashboard-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= PAGE ================= */
+
+.settings-page {
+    padding: 30px;
+}
+
+.settings-header {
+    margin-bottom: 30px;
+}
+
+.settings-header h1 {
+    font-size: 32px;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.settings-header p {
+    color: #64748b;
+}
+
+/* ================= GRID ================= */
+
+.settings-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 25px;
+}
+
+/* ================= CARD ================= */
+
+.setting-card {
+    background: #fff;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.08);
+    border: 1px solid #e2e8f0;
+}
+
+.setting-card h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    color: #0f172a;
+}
+
+.setting-card h3 svg {
+    color: #2563eb;
+}
+
+.setting-card label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+    color: #475569;
+    font-weight: 500;
+}
+
+/* ================= SWITCH ================= */
+
+.setting-card input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* ================= SELECT ================= */
+
+.setting-card select {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #dbe3ef;
+    border-radius: 12px;
+    padding: 0 15px;
+    outline: none;
+    font-size: 15px;
+    background: white;
+}
+
+.setting-card select:focus {
+    border-color: #2563eb;
+}
+
+/* ================= BUTTON ================= */
+
+.setting-btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.setting-btn:hover {
+    background: #1d4ed8;
+}
+
+/* ================= DANGER ================= */
+
+.danger h3 svg {
+    color: #ef4444;
+}
+
+.danger-btn {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 12px;
+    background: #ef4444;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.danger-btn:hover {
+    background: #dc2626;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+
+.settings-page{
+    padding:20px;
+}
+
+.settings-container{
+    grid-template-columns:1fr;
+}
+
+.setting-card{
+    padding:22px;
+}
+
+.settings-header h1{
+    font-size:28px;
+}
+
+}

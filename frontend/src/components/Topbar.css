@@ -1,0 +1,160 @@
+.topbar {
+  height: 75px;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  border-bottom: 1px solid #e2e8f0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ================= LEFT ================= */
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.menu-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 10px;
+  background: #f1f5f9;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: .3s;
+}
+
+.menu-btn:hover {
+  background: #e2e8f0;
+}
+
+.search-box {
+  width: 380px;
+  height: 45px;
+  background: #f8fafc;
+  border: 1px solid #dbe3ef;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  gap: 10px;
+}
+
+.search-box svg {
+  color: #64748b;
+}
+
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 15px;
+}
+
+/* ================= RIGHT ================= */
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.theme-btn,
+.notification-btn {
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 12px;
+  background: #f8fafc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  transition: .3s;
+}
+
+.theme-btn:hover,
+.notification-btn:hover {
+  background: #e2e8f0;
+}
+
+.notification-count {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 18px;
+  height: 18px;
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  font-size: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+}
+
+/* ================= PROFILE ================= */
+
+.profile-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f8fafc;
+  padding: 8px 15px;
+  border-radius: 14px;
+}
+
+.profile-box img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.profile-box h4 {
+  font-size: 15px;
+  color: #1e293b;
+  margin-bottom: 3px;
+}
+
+.profile-box span {
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 992px) {
+
+  .search-box {
+    width: 240px;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .topbar {
+    padding: 0 15px;
+  }
+
+  .search-box {
+    display: none;
+  }
+
+  .profile-box div {
+    display: none;
+  }
+
+}

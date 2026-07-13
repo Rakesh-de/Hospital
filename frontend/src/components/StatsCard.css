@@ -1,0 +1,77 @@
+.stats-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: 1px solid #eef2f7;
+}
+
+.stats-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(37, 99, 235, 0.15);
+}
+
+.stats-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.stats-icon {
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+.stats-percentage {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.stats-percentage.positive {
+  color: #16a34a;
+}
+
+.stats-percentage.negative {
+  color: #dc2626;
+}
+
+.stats-body h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 8px;
+}
+
+.stats-body p {
+  color: #64748b;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+@media (max-width:768px) {
+
+  .stats-card {
+    padding: 18px;
+  }
+
+  .stats-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .stats-body h2 {
+    font-size: 28px;
+  }
+
+}

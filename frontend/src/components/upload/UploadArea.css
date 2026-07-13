@@ -1,0 +1,150 @@
+.upload-wrapper{
+    margin:30px 0;
+}
+
+/* ================= Upload Box ================= */
+
+.upload-area{
+    background:#ffffff;
+    border:2px dashed #2563eb;
+    border-radius:20px;
+    padding:60px 30px;
+    text-align:center;
+    transition:.3s;
+    cursor:pointer;
+}
+
+.upload-area:hover{
+    background:#f8fbff;
+    border-color:#1d4ed8;
+}
+
+.upload-area svg{
+    color:#2563eb;
+    margin-bottom:20px;
+}
+
+.upload-area h2{
+    color:#0f172a;
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.upload-area p{
+    color:#64748b;
+    font-size:16px;
+    margin-bottom:25px;
+}
+
+/* ================= Buttons ================= */
+
+.browse-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:14px 28px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.browse-btn:hover{
+    background:#1d4ed8;
+}
+
+.browse-btn:disabled{
+    background:#94a3b8;
+    cursor:not-allowed;
+}
+
+/* ================= Selected File ================= */
+
+.selected-file{
+    margin-top:25px;
+    background:#fff;
+    border-radius:16px;
+    padding:18px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 10px 25px rgba(15,23,42,.08);
+    border:1px solid #e2e8f0;
+}
+
+.file-info{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.file-info svg{
+    color:#2563eb;
+}
+
+.file-info h4{
+    font-size:16px;
+    color:#0f172a;
+    margin-bottom:5px;
+}
+
+.file-info span{
+    font-size:14px;
+    color:#64748b;
+}
+
+/* Upload + Delete Buttons */
+
+.file-actions{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+/* Remove */
+
+.remove-btn{
+    width:42px;
+    height:42px;
+    border:none;
+    border-radius:10px;
+    background:#fee2e2;
+    color:#dc2626;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:.3s;
+}
+
+.remove-btn:hover{
+    background:#fecaca;
+}
+
+/* ================= Responsive ================= */
+
+@media(max-width:768px){
+
+.upload-area{
+    padding:40px 20px;
+}
+
+.upload-area h2{
+    font-size:22px;
+}
+
+.selected-file{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:20px;
+}
+
+.file-actions{
+    width:100%;
+}
+
+.file-actions button{
+    flex:1;
+}
+}

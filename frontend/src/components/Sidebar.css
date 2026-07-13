@@ -1,0 +1,150 @@
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 280px;
+  height: 100vh;
+  background: #0f172a;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  padding: 25px;
+  box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+}
+
+/* ================= LOGO ================= */
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 45px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-logo svg {
+  color: #3b82f6;
+}
+
+.sidebar-logo h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.sidebar-logo span {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* ================= MENU ================= */
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #cbd5e1;
+  transition: 0.3s ease;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.menu-item svg {
+  transition: 0.3s;
+}
+
+.menu-item:hover {
+  background: #1e293b;
+  color: white;
+  transform: translateX(6px);
+}
+
+.menu-item:hover svg {
+  color: #3b82f6;
+}
+
+.menu-item.active {
+  background: linear-gradient(90deg, #2563eb, #1d4ed8);
+  color: white;
+  font-weight: 600;
+}
+
+.menu-item.active svg {
+  color: white;
+}
+
+/* ================= LOGOUT ================= */
+
+.logout-btn {
+  margin-top: auto;
+  width: 100%;
+  height: 52px;
+  border: none;
+  border-radius: 12px;
+  background: #ef4444;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+}
+
+/* ================= SCROLLBAR ================= */
+
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 992px) {
+  .sidebar {
+    width: 230px;
+    padding: 20px;
+  }
+
+  .sidebar-logo h2 {
+    font-size: 20px;
+  }
+
+  .menu-item {
+    padding: 12px 15px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    transition: 0.3s;
+  }
+
+  .sidebar.show {
+    transform: translateX(0);
+  }
+}

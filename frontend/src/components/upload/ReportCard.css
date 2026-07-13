@@ -1,0 +1,213 @@
+.report-card{
+    background:#ffffff;
+    border-radius:20px;
+    padding:22px;
+    border:1px solid #e2e8f0;
+    box-shadow:0 10px 25px rgba(15,23,42,.08);
+    transition:.3s;
+}
+
+.report-card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 20px 45px rgba(37,99,235,.15);
+}
+
+/* ================= TOP ================= */
+
+.report-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.report-icon{
+    width:65px;
+    height:65px;
+    border-radius:16px;
+    background:#eff6ff;
+    color:#2563eb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.report-status{
+    padding:6px 14px;
+    border-radius:30px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.report-status.success{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.report-status.pending{
+    background:#fef3c7;
+    color:#d97706;
+}
+
+/* ================= BODY ================= */
+
+.report-body h3{
+    font-size:18px;
+    color:#0f172a;
+    margin-bottom:16px;
+    word-break:break-word;
+}
+
+.report-info{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.report-info p{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:#64748b;
+    font-size:14px;
+}
+
+.report-info svg{
+    color:#2563eb;
+}
+
+/* ================= BUTTONS ================= */
+
+.report-actions{
+    margin-top:25px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.analyze-btn{
+    flex:1;
+    height:46px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.3s;
+}
+
+.analyze-btn:hover{
+    background:#1d4ed8;
+}
+
+.icon-btn{
+    width:46px;
+    height:46px;
+    border:none;
+    border-radius:12px;
+    background:#f8fafc;
+    color:#334155;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.icon-btn:hover{
+    background:#e2e8f0;
+}
+
+.icon-btn.delete{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.icon-btn.delete:hover{
+    background:#fecaca;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:768px){
+
+.report-actions{
+    flex-direction:column;
+}
+
+.analyze-btn{
+    width:100%;
+}
+
+.icon-btn{
+    width:100%;
+}
+
+}
+
+/* ================= EXTRA INFO ================= */
+
+.report-extra{
+    margin-top:18px;
+    padding-top:14px;
+    border-top:1px solid #e2e8f0;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+}
+
+.report-extra p{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:14px;
+    color:#475569;
+}
+
+.report-extra strong{
+    color:#0f172a;
+}
+
+/* ================= Loading ================= */
+
+.analyze-btn:disabled{
+    opacity:.6;
+    cursor:not-allowed;
+}
+
+/* ================= Hover ================= */
+
+.icon-btn svg,
+.analyze-btn svg{
+    transition:.3s;
+}
+
+.icon-btn:hover svg,
+.analyze-btn:hover svg{
+    transform:scale(1.1);
+}
+
+/* ================= Risk Colors ================= */
+
+.low-risk{
+    color:#16a34a;
+    font-weight:600;
+}
+
+.medium-risk{
+    color:#d97706;
+    font-weight:600;
+}
+
+.high-risk{
+    color:#dc2626;
+    font-weight:600;
+}

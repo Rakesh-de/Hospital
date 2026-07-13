@@ -1,0 +1,43 @@
+.ai-report{
+    padding:30px;
+    background:#f8fafc;
+    min-height:100vh;
+}
+
+.report-box{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.report-box h2{
+    margin-bottom:20px;
+    color:#0f172a;
+}
+
+.report-box p{
+    margin:12px 0;
+    font-size:16px;
+}
+
+.section{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    margin-top:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.section h2{
+    margin-bottom:18px;
+}
+
+.section ul{
+    padding-left:22px;
+}
+
+.section li{
+    margin-bottom:10px;
+}

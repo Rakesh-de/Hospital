@@ -1,0 +1,490 @@
+/* ===========================
+   GLOBAL
+=========================== */
+
+.feature-hero,
+.feature-section,
+.workflow-section,
+.technology-section,
+.benefit-section,
+.feature-cta{
+    width:100%;
+}
+
+.container{
+    width:90%;
+    max-width:1300px;
+    margin:auto;
+}
+
+.section-title{
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.section-title h2{
+    font-size:40px;
+    color:#0f172a;
+    margin-bottom:15px;
+    font-weight:700;
+}
+
+.section-title p{
+    max-width:720px;
+    margin:auto;
+    color:#64748b;
+    line-height:1.8;
+    font-size:17px;
+}
+
+/* ===========================
+   HERO
+=========================== */
+
+.feature-hero{
+
+    padding:120px 0 90px;
+
+    background:linear-gradient(135deg,#eff6ff,#ffffff);
+
+    text-align:center;
+
+}
+
+.feature-hero h1{
+
+    font-size:58px;
+
+    color:#0f172a;
+
+    margin-bottom:20px;
+
+}
+
+.feature-hero p{
+
+    max-width:850px;
+
+    margin:auto;
+
+    color:#64748b;
+
+    line-height:1.9;
+
+    font-size:18px;
+
+}
+
+/* ===========================
+   FEATURES
+=========================== */
+
+.feature-section{
+
+    padding:100px 0;
+
+    background:#ffffff;
+
+}
+
+.feature-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+
+    gap:30px;
+
+}
+
+.feature-card{
+
+    background:#ffffff;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    border:1px solid #e2e8f0;
+
+    box-shadow:0 15px 40px rgba(15,23,42,.08);
+
+    transition:.35s;
+
+}
+
+.feature-card:hover{
+
+    transform:translateY(-10px);
+
+    box-shadow:0 20px 45px rgba(37,99,235,.15);
+
+}
+
+.feature-icon{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:18px;
+
+    background:#dbeafe;
+
+    color:#2563eb;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+}
+
+.feature-card h3{
+
+    font-size:24px;
+
+    color:#0f172a;
+
+    margin-bottom:15px;
+
+}
+
+.feature-card p{
+
+    color:#64748b;
+
+    line-height:1.8;
+
+}
+
+/* ===========================
+   WORKFLOW
+=========================== */
+
+.workflow-section{
+
+    padding:100px 0;
+
+    background:#f8fafc;
+
+}
+
+.workflow-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:30px;
+
+}
+
+.workflow-card{
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:35px;
+
+    text-align:center;
+
+    border:1px solid #e2e8f0;
+
+    transition:.35s;
+
+}
+
+.workflow-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 18px 40px rgba(37,99,235,.12);
+
+}
+
+.workflow-card span{
+
+    width:60px;
+
+    height:60px;
+
+    margin:auto;
+
+    margin-bottom:20px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:22px;
+
+    font-weight:700;
+
+}
+
+.workflow-card h3{
+
+    margin-bottom:15px;
+
+    color:#0f172a;
+
+    font-size:22px;
+
+}
+
+.workflow-card p{
+
+    color:#64748b;
+
+    line-height:1.8;
+
+}
+
+/* ===========================
+   TECHNOLOGY
+=========================== */
+
+.technology-section{
+    padding:100px 0;
+    background:#ffffff;
+}
+
+.tech-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:22px;
+}
+
+.tech-card{
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:18px;
+    padding:24px;
+    text-align:center;
+    font-size:17px;
+    font-weight:600;
+    color:#0f172a;
+    transition:.35s;
+}
+
+.tech-card:hover{
+    background:#2563eb;
+    color:#ffffff;
+    transform:translateY(-6px);
+    box-shadow:0 18px 40px rgba(37,99,235,.15);
+}
+
+/* ===========================
+   BENEFITS
+=========================== */
+
+.benefit-section{
+    padding:100px 0;
+    background:#f8fafc;
+}
+
+.benefit-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:30px;
+}
+
+.benefit-card{
+    background:#ffffff;
+    border-radius:22px;
+    padding:35px;
+    border:1px solid #e2e8f0;
+    box-shadow:0 12px 30px rgba(15,23,42,.08);
+    transition:.35s;
+}
+
+.benefit-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 20px 45px rgba(37,99,235,.15);
+}
+
+.benefit-card h3{
+    color:#0f172a;
+    margin-bottom:16px;
+    font-size:24px;
+}
+
+.benefit-card p{
+    color:#64748b;
+    line-height:1.8;
+}
+
+/* ===========================
+   CTA
+=========================== */
+
+.feature-cta{
+    padding:100px 0;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    text-align:center;
+    color:#ffffff;
+}
+
+.feature-cta h2{
+    font-size:42px;
+    margin-bottom:18px;
+}
+
+.feature-cta p{
+    max-width:700px;
+    margin:auto;
+    margin-bottom:35px;
+    line-height:1.9;
+    font-size:18px;
+}
+
+.feature-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:16px 38px;
+    border:none;
+    border-radius:12px;
+    background:#ffffff;
+    color:#2563eb;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.feature-btn:hover{
+    transform:translateY(-4px);
+    background:#f8fafc;
+}
+
+/* ===========================
+   ANIMATION
+=========================== */
+
+.feature-card,
+.workflow-card,
+.tech-card,
+.benefit-card{
+    animation:fadeUp .8s ease;
+}
+
+@keyframes fadeUp{
+
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+
+}
+
+/* ===========================
+   RESPONSIVE
+=========================== */
+
+@media(max-width:1100px){
+
+.feature-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.workflow-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.benefit-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:768px){
+
+.feature-hero{
+    padding:90px 0 70px;
+}
+
+.feature-hero h1{
+    font-size:38px;
+}
+
+.feature-hero p{
+    font-size:16px;
+}
+
+.section-title h2{
+    font-size:30px;
+}
+
+.feature-grid,
+.workflow-grid,
+.tech-grid,
+.benefit-grid{
+    grid-template-columns:1fr;
+}
+
+.feature-card,
+.workflow-card,
+.benefit-card{
+    padding:30px;
+}
+
+.feature-cta h2{
+    font-size:30px;
+}
+
+.feature-cta p{
+    font-size:16px;
+}
+
+}
+
+@media(max-width:480px){
+
+.container{
+    width:92%;
+}
+
+.feature-hero h1{
+    font-size:32px;
+}
+
+.section-title h2{
+    font-size:26px;
+}
+
+.feature-card h3,
+.workflow-card h3,
+.benefit-card h3{
+    font-size:20px;
+}
+
+.tech-card{
+    font-size:15px;
+    padding:20px;
+}
+
+.feature-btn{
+    width:100%;
+}
+
+}
