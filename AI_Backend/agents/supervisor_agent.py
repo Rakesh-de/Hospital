@@ -1,108 +1,108 @@
-from langchain_groq import ChatGroq
-from langchain_core.prompts import ChatPromptTemplate
-from config import settings
+# from langchain_groq import ChatGroq
+# from langchain_core.prompts import ChatPromptTemplate
+# from config import settings
 
-llm = ChatGroq(
-    model=settings.GROQ_MODEL,
-    api_key=settings.GROQ_API_KEY,
-    temperature=0
-)
+# llm = ChatGroq(
+#     model=settings.GROQ_MODEL,
+#     api_key=settings.GROQ_API_KEY,
+#     temperature=0
+# )
 
-prompt = ChatPromptTemplate.from_messages(
-    [
-        (
-            "system",
-            """
-You are the Supervisor Agent of MediMind AI.
+# prompt = ChatPromptTemplate.from_messages(
+#     [
+#         (
+#             "system",
+#             """
+# You are the Supervisor Agent of MediMind AI.
 
-Your job is to decide which agent should execute next.
+# Your job is to decide which agent should execute next.
 
-Available Agents:
+# Available Agents:
 
-OCR
-VISION
-RAG
-DIAGNOSIS
-RISK
-RECOMMENDATION
-SUMMARY
-DOCTOR_CHAT
-END
+# OCR
+# VISION
+# RAG
+# DIAGNOSIS
+# RISK
+# RECOMMENDATION
+# SUMMARY
+# DOCTOR_CHAT
+# END
 
-Rules
+# Rules
 
-If report text is empty -> OCR
+# If report text is empty -> OCR
 
-If uploaded file is image -> VISION
+# If uploaded file is image -> VISION
 
-If medical context not available -> RAG
+# If medical context not available -> RAG
 
-If diagnosis missing -> DIAGNOSIS
+# If diagnosis missing -> DIAGNOSIS
 
-If risk missing -> RISK
+# If risk missing -> RISK
 
-If recommendation missing -> RECOMMENDATION
+# If recommendation missing -> RECOMMENDATION
 
-If summary missing -> SUMMARY
+# If summary missing -> SUMMARY
 
-If patient asked question -> DOCTOR_CHAT
+# If patient asked question -> DOCTOR_CHAT
 
-Otherwise END
+# Otherwise END
 
-Return ONLY one word.
-"""
-        ),
-        (
-            "human",
-            """
-Current State
+# Return ONLY one word.
+# """
+#         ),
+#         (
+#             "human",
+#             """
+# Current State
 
-File Type:
-{file_type}
+# File Type:
+# {file_type}
 
-OCR Text:
-{text}
+# OCR Text:
+# {text}
 
-Medical Context:
-{context}
+# Medical Context:
+# {context}
 
-Diagnosis:
-{diagnosis}
+# Diagnosis:
+# {diagnosis}
 
-Risk:
-{risk}
+# Risk:
+# {risk}
 
-Recommendation:
-{recommendation}
+# Recommendation:
+# {recommendation}
 
-Summary:
-{summary}
+# Summary:
+# {summary}
 
-Patient Question:
-{question}
-"""
-        ),
-    ]
-)
+# Patient Question:
+# {question}
+# """
+#         ),
+#     ]
+# )
 
-chain = prompt | llm
+# chain = prompt | llm
 
 
-def supervisor_agent(state):
+# def supervisor_agent(state):
 
-    response = chain.invoke(
-        {
-            "file_type": state.get("file_type", ""),
-            "text": state.get("text", ""),
-            "context": state.get("context", ""),
-            "diagnosis": state.get("diagnosis", ""),
-            "risk": state.get("risk", ""),
-            "recommendation": state.get("recommendation", ""),
-            "summary": state.get("summary", ""),
-            "question": state.get("question", "")
-        }
-    )
+#     response = chain.invoke(
+#         {
+#             "file_type": state.get("file_type", ""),
+#             "text": state.get("text", ""),
+#             "context": state.get("context", ""),
+#             "diagnosis": state.get("diagnosis", ""),
+#             "risk": state.get("risk", ""),
+#             "recommendation": state.get("recommendation", ""),
+#             "summary": state.get("summary", ""),
+#             "question": state.get("question", "")
+#         }
+#     )
 
-    state["next_agent"] = response.content.strip().upper()
+#     state["next_agent"] = response.content.strip().upper()
 
-    return state
+#     return state

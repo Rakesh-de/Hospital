@@ -1,29 +1,29 @@
-def emergency_agent(state):
+# def emergency_agent(state):
 
-    diagnosis = state["diagnosis"]
+#     diagnosis = state["diagnosis"]
 
-    if diagnosis["risk"]=="High":
+#     if diagnosis["risk"]=="High":
 
-        state["emergency"]={
+#         state["emergency"]={
 
-            "priority":"RED",
+#             "priority":"RED",
 
-            "ambulance":True,
+#             "ambulance":True,
 
-            "doctor":"Immediately Consult"
+#             "doctor":"Immediately Consult"
 
-        }
+#         }
 
-    else:
+#     else:
 
-        state["emergency"]={
+#         state["emergency"]={
 
-            "priority":"GREEN",
+#             "priority":"GREEN",
 
-            "ambulance":False,
+#             "ambulance":False,
 
-            "doctor":"Routine Check"
+#             "doctor":"Routine Check"
 
-        }
+#         }
 
-    return state
+#     return state

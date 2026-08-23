@@ -3,8 +3,11 @@ import {
   uploadToCloudinary,
 } from "../config/cloudinary.js";
 
+
+
 import { deleteFromCloudinary } from "../config/cloudinary.js";
 
+import aiApi from "../config/aiApi.js";
 /*
 =========================================
 Upload Medical Report
@@ -290,62 +293,238 @@ Private
 
 export const analyzeReport = async (req, res) => {
 
+  try {
+
+    // ==========================================
+    // Find Report
+    // ==========================================
+
+    const report = await Report.findOne({
+
+      _id: req.params.id,
+
+      user: req.user._id,
+
+      isDeleted: false,
+
+    });
+
+    if (!report) {
+
+      return res.status(404).json({
+
+        success: false,
+
+        message: "Report not found.",
+
+      });
+
+    }
+
+    // ==========================================
+    // Update Status
+    // ==========================================
+
+    report.analysisStatus = "Processing";
+
+    await report.save();
+
+    // ==========================================
+    // Call Python AI Backend
+    // ==========================================
+
+    let data;
+
     try {
 
-        const report = await Report.findOne({
-            _id: req.params.id,
-            user: req.user._id,
-            isDeleted: false,
-        });
+      const response = await aiApi.post(
+        "/report/analyze",
+        {
+          reportId: report._id,
+          fileUrl: report.fileUrl,
+          fileType: report.fileType,
+        }
+      );
 
-        if (!report) {
+      data = response.data;
 
-            return res.status(404).json({
-                success: false,
-                message: "Report not found."
-            });
+      console.log("========== AI RESPONSE ==========");
+      console.log(data);
+
+    } catch (err) {
+
+      console.log("========== AI ERROR ==========");
+      console.log(err.response?.data);
+      console.log(err.response?.status);
+      console.log(err.response?.data?.message);
+
+      throw err;
+    }
+
+    // ==========================================
+    // Validate Response
+    // ==========================================
+
+    if (!data) {
+
+      report.analysisStatus = "Failed";
+
+      await report.save();
+
+      return res.status(500).json({
+
+        success: false,
+
+        message: "AI Backend returned empty response."
+
+      });
+
+    }
+
+    // ==========================================
+    // Save AI Output
+    // ==========================================
+    report.analysisStatus = "Completed";
+
+    // =====================
+    // Basic
+    // =====================
+
+    report.extractedText =
+    data.extractedText ||
+    data.text ||
+    data.vision?.ocr_text ||
+    "";
+
+    report.aiSummary = data.summary || "";
+
+    report.confidenceScore = Number(data.confidenceScore || 0);
+
+    report.riskLevel = data.riskLevel || "Low";
+
+    report.healthScore = Number(data.healthScore || 0);
+
+    report.overallHealth = data.overallHealth || "";
+
+    report.medicalContext = data.context || "";
+
+    report.doctorNotes =
+    data.doctorNotes ||
+    data.vision?.doctor_notes ||
+    "";
+
+
+    // =====================
+    // Complete AI Objects
+    // =====================
+
+    report.vision = {
+    ...(data.vision || {})
+    };
+
+    report.clinical = data.clinical || {};
+
+    report.diagnosis = data.diagnosis || {};
+
+    report.recommendation = data.recommendation || {};
+
+    report.labValues = data.labValues || {};
+
+    report.labAnalysis = data.labAnalysis || {};
+
+    report.prescription = data.prescription || {};
+
+    report.drugInteractions = data.drugInteractions || {};
+
+    report.comparison = data.comparison || {};
+
+    report.emergency = data.emergency || {};
+
+
+    // =====================
+    // Arrays
+    // =====================
+
+    report.medicineSchedule = Array.isArray(data.medicineSchedule)
+      ? data.medicineSchedule
+      : [];
+
+    report.possibleConditions = Array.isArray(data.possibleConditions)
+      ? data.possibleConditions
+      : [];
+
+    report.followUpTests = Array.isArray(data.followUpTests)
+      ? data.followUpTests
+      : [];
+
+    report.abnormalValues =
+      data.diagnosis?.abnormal_values ||
+      [];
+
+    report.medicines =
+      data.diagnosis?.medicines ||
+      [];
+
+
+    // =====================
+    // Save
+    // =====================
+
+    await report.save();
+
+    // ==========================================
+    // Response
+    // ==========================================
+
+    return res.status(200).json({
+
+      success: true,
+
+      message: "AI analysis completed successfully.",
+
+       report: await Report.findById(report._id)
+
+    });
+
+  }
+
+  catch (error) {
+
+    console.error("Analyze Report Error:", error);
+
+    // Try to mark report as failed
+
+    try {
+
+      await Report.findByIdAndUpdate(
+
+        req.params.id,
+
+        {
+
+          analysisStatus: "Failed"
 
         }
 
-        report.analysisStatus = "Processing";
-        await report.save();
+      );
 
-        // AI Backend Call
+    } catch (e) { }
 
-        const { data } = await aiApi.post(
-            "/report/analyze",
-            {
-                reportId: report._id,
-                fileUrl: report.fileUrl,
-                fileType: report.fileType
-            }
-        );
+    return res.status(500).json({
 
-        report.analysisStatus = "Completed";
-        report.extractedText = data.extractedText;
-        report.aiSummary = data.summary;
-        report.diagnosis = data.diagnosis;
-        report.recommendations = data.recommendations;
-        report.confidenceScore = data.confidenceScore;
-        report.riskLevel = data.riskLevel;
+      success: false,
 
-        await report.save();
+      message:
 
-        res.json({
-            success: true,
-            report
-        });
+        error.response?.data?.message ||
 
-    } catch (error) {
+        error.message ||
 
-        console.log(error);
+        "Internal Server Error",
 
-        res.status(500).json({
-            success: false,
-            message: error.message
-        });
+    });
 
-    }
+  }
 
 };
 
@@ -413,8 +592,8 @@ export const getDashboardStats = async (req, res) => {
       healthScore >= 85
         ? "Low"
         : healthScore >= 60
-        ? "Medium"
-        : "High";
+          ? "Medium"
+          : "High";
 
     const lastAnalysis =
       recentReports.length > 0
@@ -460,9 +639,13 @@ export const getDashboardStats = async (req, res) => {
 
   } catch (error) {
 
+    console.log("Dashboard Error");
+
+    console.log(error);
+
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: error.message
     });
 
   }

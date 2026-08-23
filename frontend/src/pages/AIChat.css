@@ -76,3 +76,16 @@
     color:white;
     cursor:pointer;
 }
+
+.message-content {
+    width: 100%;
+}
+
+.message-content p {
+    margin: 0;
+}
+
+.message-content ol,
+.message-content ul {
+    padding-left: 22px;
+}

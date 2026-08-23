@@ -5,22 +5,14 @@
     font-family:"Poppins",sans-serif;
 }
 
-.dashboard{
-    display:flex;
-    min-height:100vh;
-    background:#f4f8ff;
-}
-
-.dashboard-content{
-    flex:1;
-    margin-left:270px;
-    display:flex;
-    flex-direction:column;
-}
+/* Main dashboard body */
 
 .dashboard-body{
+    flex:1;
     padding:30px;
 }
+
+/* ================= Welcome ================= */
 
 .welcome-section{
     margin-bottom:30px;
@@ -147,12 +139,10 @@
 
 @media(max-width:1100px){
 
-.dashboard-content{
-    margin-left:0;
-}
-
 .dashboard-row{
+
     grid-template-columns:1fr;
+
 }
 
 }
@@ -160,16 +150,22 @@
 @media(max-width:768px){
 
 .dashboard-body{
+
     padding:20px;
+
 }
 
 .stats-grid,
 .activity-grid{
+
     grid-template-columns:1fr;
+
 }
 
 .welcome-section h1{
+
     font-size:28px;
+
 }
 
 }

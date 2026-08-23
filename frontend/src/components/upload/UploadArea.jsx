@@ -48,132 +48,147 @@ const UploadArea = ({ fetchReports }) => {
 
   };
 
-  const handleUpload = async () => {
+const handleUpload = async () => {
 
-    if (!selectedFile) {
+  if (!selectedFile) {
+    alert("Please select a file.");
+    return;
+  }
 
-      alert("Please select a file.");
+  try {
 
-      return;
+    setLoading(true);
 
-    }
+    // Create FormData
+    const formData = new FormData();
 
-    try {
+    // "report" must match upload.single("report") in backend
+    formData.append("report", selectedFile);
 
-      setLoading(true);
+    // Upload
+    const response = await uploadReport(formData);
 
-      await uploadReport(selectedFile);
+    console.log(response);
 
-      alert("Report uploaded successfully.");
+    alert("Report uploaded successfully.");
 
-      removeFile();
+    removeFile();
 
+    if (fetchReports) {
       fetchReports();
-
-    } catch (error) {
-
-      console.log(error);
-
-      alert("Upload Failed");
-
-    } finally {
-
-      setLoading(false);
-
     }
 
-  };
+  } catch (error) {
 
-  return (
+    console.error("Upload Error:", error);
 
-    <div className="upload-wrapper">
+    console.error(error.response?.data);
 
-      <div
-        className="upload-area"
-        onDragOver={(e) => e.preventDefault()}
-        onDrop={handleDrop}
+    alert(
+      error.response?.data?.message || "Upload Failed"
+    );
+
+  } finally {
+
+    setLoading(false);
+
+  }
+
+
+  
+
+};
+
+return (
+
+  <div className="upload-wrapper">
+
+    <div
+      className="upload-area"
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={handleDrop}
+    >
+
+      <UploadCloud size={60} />
+
+      <h2>Drag & Drop your medical report</h2>
+
+      <p>PDF, JPG, PNG up to 20 MB</p>
+
+      <button
+        className="browse-btn"
+        onClick={() => fileInputRef.current.click()}
       >
+        Browse Files
+      </button>
 
-        <UploadCloud size={60} />
+      <input
+        type="file"
+        hidden
+        ref={fileInputRef}
+        accept=".pdf,.jpg,.jpeg,.png"
+        onChange={handleChange}
+      />
 
-        <h2>Drag & Drop your medical report</h2>
+    </div>
 
-        <p>PDF, JPG, PNG up to 20 MB</p>
+    {selectedFile && (
 
-        <button
-          className="browse-btn"
-          onClick={() => fileInputRef.current.click()}
-        >
-          Browse Files
-        </button>
+      <div className="selected-file">
 
-        <input
-          type="file"
-          hidden
-          ref={fileInputRef}
-          accept=".pdf,.jpg,.jpeg,.png"
-          onChange={handleChange}
-        />
+        <div className="file-info">
 
-      </div>
+          {selectedFile.type.includes("image")
+            ? <Image size={28} />
+            : <FileText size={28} />
+          }
 
-      {selectedFile && (
+          <div>
 
-        <div className="selected-file">
+            <h4>{selectedFile.name}</h4>
 
-          <div className="file-info">
+            <span>
 
-            {selectedFile.type.includes("image")
-              ? <Image size={28} />
-              : <FileText size={28} />
-            }
+              {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
 
-            <div>
-
-              <h4>{selectedFile.name}</h4>
-
-              <span>
-
-                {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
-
-              </span>
-
-            </div>
-
-          </div>
-
-          <div className="file-actions">
-
-            <button
-              className="browse-btn"
-              onClick={handleUpload}
-              disabled={loading}
-            >
-
-              {
-                loading
-                  ? "Uploading..."
-                  : "Upload"
-              }
-
-            </button>
-
-            <button
-              className="remove-btn"
-              onClick={removeFile}
-            >
-              <X size={18} />
-            </button>
+            </span>
 
           </div>
 
         </div>
 
-      )}
+        <div className="file-actions">
 
-    </div>
+          <button
+            className="browse-btn"
+            onClick={handleUpload}
+            disabled={loading}
+          >
 
-  );
+            {
+              loading
+                ? "Uploading..."
+                : "Upload"
+            }
+
+          </button>
+
+          <button
+            className="remove-btn"
+            onClick={removeFile}
+          >
+            <X size={18} />
+          </button>
+
+        </div>
+
+      </div>
+
+    )}
+
+  </div>
+
+);
 
 };
 

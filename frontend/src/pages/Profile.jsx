@@ -1,9 +1,7 @@
 import "./Profile.css";
 
 import { useEffect, useState } from "react";
-
-import Sidebar from "../components/Sidebar";
-import Topbar from "../components/Topbar";
+import DashboardLayout from "../layout/DashboardLayout";
 
 import {
     Camera,
@@ -17,10 +15,7 @@ import {
 
 const Profile = () => {
 
-    const [sidebarOpen, setSidebarOpen] = useState(true);
-
-    const [darkMode, setDarkMode] = useState(false);
-
+    
     const [isEditing, setIsEditing] = useState(false);
 
     const [user, setUser] = useState({
@@ -86,206 +81,180 @@ const Profile = () => {
 
     }, []);
 
-    return (
+ return (
 
-        <div className="dashboard">
+    <DashboardLayout user={user}>
 
-            <Sidebar />
+        <div className="profile-page">
 
-            <div className="dashboard-content">
+            <div className="profile-header">
 
-                <Topbar
-                    sidebarOpen={sidebarOpen}
-                    setSidebarOpen={setSidebarOpen}
-                    darkMode={darkMode}
-                    setDarkMode={setDarkMode}
-                    user={user}
-                />
+                <h1>My Profile</h1>
 
-                <div className="profile-page">
+                <p>
+                    Manage your personal healthcare information.
+                </p>
 
-                    <div className="profile-header">
+            </div>
 
-                        <h1>My Profile</h1>
+            <div className="profile-container">
 
-                        <p>
+                {/* Left Card */}
 
-                            Manage your personal healthcare information.
+                <div className="profile-card">
 
-                        </p>
+                    <div className="profile-image">
+
+                        <img
+                            src={user.avatar}
+                            alt="profile"
+                        />
+
+                        <button>
+                            <Camera size={18} />
+                        </button>
 
                     </div>
 
-                    <div className="profile-container">
+                    <h2>{user.name}</h2>
 
-                        {/* Left Card */}
+                    <p>{user.email}</p>
 
-                        <div className="profile-card">
+                    <span className="profile-badge">
+                        Patient
+                    </span>
 
-                            <div className="profile-image">
+                </div>
 
-                                <img
-                                    src={user.avatar}
-                                    alt="profile"
-                                />
+                {/* Right Card */}
 
-                                <button>
+                <div className="profile-details">
 
-                                    <Camera size={18} />
+                    <h2>Personal Information</h2>
 
-                                </button>
+                    <div className="profile-grid">
 
-                            </div>
+                        <div className="profile-field">
 
-                            <h2>{user.name}</h2>
+                            <label>Full Name</label>
 
-                            <p>{user.email}</p>
-
-                            <span className="profile-badge">
-
-                                Patient
-
-                            </span>
-
-                        </div>
-
-                        {/* Right Card */}
-
-                        {/* Right Card */}
-
-                        <div className="profile-details">
-
-                            <h2>Personal Information</h2>
-
-                            <div className="profile-grid">
-
-                                <div className="profile-field">
-
-                                    <label>Full Name</label>
-
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={user.name}
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                    />
-
-                                </div>
-
-                                <div className="profile-field">
-
-                                    <label>Email</label>
-
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={user.email}
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                    />
-
-                                </div>
-
-                                <div className="profile-field">
-
-                                    <label>Phone</label>
-
-                                    <input
-                                        type="text"
-                                        name="phone"
-                                        value={user.phone}
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                    />
-
-                                </div>
-
-                                <div className="profile-field">
-
-                                    <label>Gender</label>
-
-                                    <input
-                                        type="text"
-                                        name="gender"
-                                        value={user.gender}
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                    />
-
-                                </div>
-
-                                <div className="profile-field">
-
-                                    <label>Date of Birth</label>
-
-                                    <input
-                                        type="text"
-                                        name="dob"
-                                        value={user.dob}
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                    />
-
-                                </div>
-
-                                <div className="profile-field">
-
-                                    <label>Blood Group</label>
-
-                                    <input
-                                        type="text"
-                                        name="bloodGroup"
-                                        value={user.bloodGroup}
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                    />
-
-                                </div>
-
-                                <div className="profile-field full-width">
-
-                                    <label>Address</label>
-
-                                    <input
-                                        type="text"
-                                        name="address"
-                                        value={user.address}
-                                        disabled={!isEditing}
-                                        onChange={handleChange}
-                                    />
-
-                                </div>
-
-                            </div>
-
-                            <div className="profile-actions">
-
-                                {isEditing ? (
-
-                                    <button
-                                        className="save-btn"
-                                        onClick={handleSave}
-                                    >
-                                        Save Changes
-                                    </button>
-
-                                ) : (
-
-                                    <button
-                                        className="edit-btn"
-                                        onClick={() => setIsEditing(true)}
-                                    >
-                                        Edit Profile
-                                    </button>
-
-                                )}
-
-                            </div>
+                            <input
+                                type="text"
+                                name="name"
+                                value={user.name}
+                                disabled={!isEditing}
+                                onChange={handleChange}
+                            />
 
                         </div>
 
+                        <div className="profile-field">
 
+                            <label>Email</label>
+
+                            <input
+                                type="email"
+                                name="email"
+                                value={user.email}
+                                disabled={!isEditing}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <div className="profile-field">
+
+                            <label>Phone</label>
+
+                            <input
+                                type="text"
+                                name="phone"
+                                value={user.phone}
+                                disabled={!isEditing}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <div className="profile-field">
+
+                            <label>Gender</label>
+
+                            <input
+                                type="text"
+                                name="gender"
+                                value={user.gender}
+                                disabled={!isEditing}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <div className="profile-field">
+
+                            <label>Date of Birth</label>
+
+                            <input
+                                type="text"
+                                name="dob"
+                                value={user.dob}
+                                disabled={!isEditing}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <div className="profile-field">
+
+                            <label>Blood Group</label>
+
+                            <input
+                                type="text"
+                                name="bloodGroup"
+                                value={user.bloodGroup}
+                                disabled={!isEditing}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                        <div className="profile-field full-width">
+
+                            <label>Address</label>
+
+                            <input
+                                type="text"
+                                name="address"
+                                value={user.address}
+                                disabled={!isEditing}
+                                onChange={handleChange}
+                            />
+
+                        </div>
+
+                    </div>
+
+                    <div className="profile-actions">
+
+                        {isEditing ? (
+
+                            <button
+                                className="save-btn"
+                                onClick={handleSave}
+                            >
+                                Save Changes
+                            </button>
+
+                        ) : (
+
+                            <button
+                                className="edit-btn"
+                                onClick={() => setIsEditing(true)}
+                            >
+                                Edit Profile
+                            </button>
+
+                        )}
 
                     </div>
 
@@ -295,8 +264,9 @@ const Profile = () => {
 
         </div>
 
-    );
+    </DashboardLayout>
 
+);
 };
 
 export default Profile;

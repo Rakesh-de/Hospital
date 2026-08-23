@@ -1,3 +1,5 @@
+import "./Features.css";
+
 import {
   Brain,
   FileText,
@@ -48,30 +50,24 @@ const features = [
 
 const Features = () => {
   return (
-    <section
-      id="features"
-      className="py-24 bg-slate-50"
-    >
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="features">
 
-        <div className="text-center mb-16">
+      <div className="features-container">
 
-          <span className="text-blue-600 font-semibold uppercase tracking-widest">
-            FEATURES
-          </span>
+        <div className="features-header">
 
-          <h2 className="mt-3 text-4xl font-bold text-slate-900">
-            Everything You Need
-          </h2>
+          <span>FEATURES</span>
 
-          <p className="mt-5 text-slate-600 max-w-2xl mx-auto">
+          <h2>Everything You Need</h2>
+
+          <p>
             A complete AI-powered healthcare platform designed for patients,
             doctors and hospitals.
           </p>
 
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="features-grid">
 
           {features.map((item, index) => {
 
@@ -79,31 +75,17 @@ const Features = () => {
 
             return (
 
-              <div
-                key={index}
-                className="bg-white rounded-3xl p-8 shadow-sm hover:shadow-xl transition duration-300 border border-slate-100 hover:-translate-y-2"
-              >
+              <div className="feature-card" key={index}>
 
-                <div className="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center mb-6">
+                <div className="feature-icon">
 
-                  <Icon
-                    size={32}
-                    className="text-blue-600"
-                  />
+                  <Icon size={30} />
 
                 </div>
 
-                <h3 className="text-2xl font-semibold text-slate-900">
+                <h3>{item.title}</h3>
 
-                  {item.title}
-
-                </h3>
-
-                <p className="mt-4 text-slate-600 leading-7">
-
-                  {item.description}
-
-                </p>
+                <p>{item.description}</p>
 
               </div>
 
@@ -114,6 +96,7 @@ const Features = () => {
         </div>
 
       </div>
+
     </section>
   );
 };

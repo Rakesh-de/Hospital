@@ -2,33 +2,25 @@ from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 
 llm = ChatGroq(
-    model="llama-3.3-70b-versatile"
+     model="llama-3.3-70b-versatile"
+    #model ="llama-3.1-8b-instant"
 )
 
 prompt = PromptTemplate(
+    template="""
+You are a medical AI assistant.
 
-template="""
+Based on the following extracted prescription information, write a short medical summary.
 
-Patient Diagnosis
+Doctor Notes:
+{doctor_notes}
 
-{diagnosis}
+Medicines:
+{medicines}
 
-Recommendations
-
-{recommendation}
-
-Write a concise medical summary.
-
+Write the summary in 4-6 lines.
 """,
-
-input_variables=[
-
-"diagnosis",
-
-"recommendation"
-
-]
-
+    input_variables=["doctor_notes", "medicines"]
 )
 
 chain = prompt | llm
@@ -36,13 +28,22 @@ chain = prompt | llm
 
 def summary_agent(state):
 
-    summary = chain.invoke({
+    vision = state.get("vision", {})
+    prescription = state.get("prescription", {})
 
-        "diagnosis": state["diagnosis"],
+    doctor_notes = vision.get("doctor_notes", "")
 
-        "recommendation": state["recommendation"]
+    medicines = prescription.get(
+        "medicines",
+        vision.get("medicines", [])
+    )
 
-    })
+    summary = chain.invoke(
+        {
+            "doctor_notes": doctor_notes,
+            "medicines": medicines,
+        }
+    )
 
     state["summary"] = summary.content
 

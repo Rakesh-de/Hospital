@@ -1,23 +1,23 @@
-from agents.diagnosis_agent import diagnosis_agent
+# from agents.diagnosis_agent import diagnosis_agent
 
-state={
+# state={
 
-"text":"""
+# "text":"""
 
-Hemoglobin : 7.5
+# Hemoglobin : 7.5
 
-RBC Low
+# RBC Low
 
-Platelet Normal
+# Platelet Normal
 
-Patient weakness
+# Patient weakness
 
-""",
+# """,
 
-"context":"Iron deficiency causes low Hb."
+# "context":"Iron deficiency causes low Hb."
 
-}
+# }
 
-state=diagnosis_agent(state)
+# state=diagnosis_agent(state)
 
-print(state["diagnosis"])
+# print(state["diagnosis"])

@@ -1,25 +1,25 @@
-def risk_agent(state):
+# def risk_agent(state):
 
-    confidence = state["diagnosis"]["confidence"]
+#     confidence = state["diagnosis"]["confidence"]
 
-    risk = state["diagnosis"]["risk"]
+#     risk = state["diagnosis"]["risk"]
 
-    health = state["diagnosis"]["health_score"]
+#     health = state["diagnosis"]["health_score"]
 
-    emergency = state["diagnosis"]["emergency"]
+#     emergency = state["diagnosis"]["emergency"]
 
-    score = {
+#     score = {
 
-        "confidence": confidence,
+#         "confidence": confidence,
 
-        "risk": risk,
+#         "risk": risk,
 
-        "health_score": health,
+#         "health_score": health,
 
-        "emergency": emergency
+#         "emergency": emergency
 
-    }
+#     }
 
-    state["risk"] = score
+#     state["risk"] = score
 
-    return state
+#     return state

@@ -1,58 +1,50 @@
-from typing import TypedDict
-
+from typing import TypedDict, Optional
 from langgraph.graph import StateGraph
 
+from agents.vision_agent import vision_agent
 from agents.ocr_agent import ocr_agent
-from agents.rag_agent import rag_agent
-from agents.diagnosis_agent import diagnosis_agent
-from agents.recommendation_agent import recommendation_agent
-from agents.risk_agent import risk_agent
+from agents.prescription_agent import prescription_agent
 from agents.summary_agent import summary_agent
 
 
 class MedicalState(TypedDict):
+    # Input
+    file: Optional[str]
+    image_path: Optional[str]
 
-    file: str
+    # Vision Output
+    vision: dict
 
+    # OCR Output
     text: str
 
-    context: str
+    # Prescription Output
+    prescription: dict
 
-    diagnosis: dict
-
-    recommendation: dict
-
-    risk: dict
-
+    # Final Summary
     summary: str
 
 
 builder = StateGraph(MedicalState)
 
+# -----------------------------
+# Nodes
+# -----------------------------
+
+builder.add_node("vision", vision_agent)
 builder.add_node("ocr", ocr_agent)
-
-builder.add_node("rag", rag_agent)
-
-builder.add_node("diagnosis", diagnosis_agent)
-
-builder.add_node("recommendation", recommendation_agent)
-
-builder.add_node("risk", risk_agent)
-
+builder.add_node("prescription", prescription_agent)
 builder.add_node("summary", summary_agent)
 
+# -----------------------------
+# Flow
+# -----------------------------
 
-builder.set_entry_point("ocr")
+builder.set_entry_point("vision")
 
-builder.add_edge("ocr", "rag")
-
-builder.add_edge("rag", "diagnosis")
-
-builder.add_edge("diagnosis", "recommendation")
-
-builder.add_edge("recommendation", "risk")
-
-builder.add_edge("risk", "summary")
+builder.add_edge("vision", "ocr")
+builder.add_edge("ocr", "prescription")
+builder.add_edge("prescription", "summary")
 
 builder.set_finish_point("summary")
 

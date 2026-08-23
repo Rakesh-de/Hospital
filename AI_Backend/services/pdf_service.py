@@ -22,12 +22,32 @@
 #         return text
 
 
+# import fitz
+
+# def extract_pdf_text(pdf_path):
+#     document = fitz.open(pdf_path)
+#     text = ""
+#     for page in document:
+#         text += page.get_text()
+#     document.close()
+#     return text
+
+
 import fitz
 
+
 def extract_pdf_text(pdf_path):
+
     document = fitz.open(pdf_path)
+
     text = ""
+
     for page in document:
-        text += page.get_text()
+
+        page_text = page.get_text()
+
+        text += page_text + "\n"
+
     document.close()
-    return text
+
+    return text.strip()

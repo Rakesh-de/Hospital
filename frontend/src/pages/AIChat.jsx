@@ -4,14 +4,20 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { Send, Bot, User } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
+
+import DashboardLayout from "../layout/DashboardLayout";
 
 import { getReport } from "../services/reportServices";
 import {
     askAI,
     askGeneralAI,
+    getChatHistory,
+    getReportChatHistory,
 } from "../services/chatService";
 
 const AIChat = () => {
@@ -26,11 +32,18 @@ const AIChat = () => {
 
     const [loading, setLoading] = useState(false);
 
+    const [historyLoaded, setHistoryLoaded] = useState(false);
+
     useEffect(() => {
 
         if (isReportChat) {
 
             fetchReport();
+            loadReportHistory();
+
+        } else {
+
+            loadGeneralHistory();
 
         }
 
@@ -54,6 +67,66 @@ const AIChat = () => {
 
     };
 
+    const formatHistory = (historyList) => {
+
+        return historyList
+            .slice()
+            .reverse()
+            .flatMap((h) => [
+                { sender: "user", text: h.question },
+                { sender: "ai", text: h.answer },
+            ]);
+
+    };
+
+    const loadGeneralHistory = async () => {
+
+        try {
+
+            const data = await getChatHistory();
+
+            if (data.success) {
+
+                setMessages(formatHistory(data.history));
+
+            }
+
+        } catch (error) {
+
+            console.log(error);
+
+        } finally {
+
+            setHistoryLoaded(true);
+
+        }
+
+    };
+
+    const loadReportHistory = async () => {
+
+        try {
+
+            const data = await getReportChatHistory(id);
+
+            if (data.success) {
+
+                setMessages(formatHistory(data.history));
+
+            }
+
+        } catch (error) {
+
+            console.log(error);
+
+        } finally {
+
+            setHistoryLoaded(true);
+
+        }
+
+    };
+
     const sendQuestion = async () => {
 
         if (!question.trim()) return;
@@ -67,14 +140,18 @@ const AIChat = () => {
 
         setLoading(true);
 
+        const askedQuestion = question;
+
+        setQuestion("");
+
         try {
 
             let data;
 
             if (isReportChat) {
-                data = await askAI(id, question);
+                data = await askAI(id, askedQuestion);
             } else {
-                data = await askGeneralAI(question);
+                data = await askGeneralAI(askedQuestion);
             }
 
             console.log("Backend Response:", data);
@@ -110,137 +187,108 @@ const AIChat = () => {
 
             setLoading(false);
 
-            setQuestion("");
-
         }
 
     };
 
-    return (
+return (
 
-        <div className="dashboard">
+    <DashboardLayout>
 
-            <Sidebar />
+        <div className="chat-page">
 
-            <div className="dashboard-content">
+            {
+                isReportChat && (
 
-                <Topbar />
+                    <div className="report-summary">
 
-                <div className="chat-page">
+                        <h2>{report?.fileName}</h2>
 
-                    {
-                        isReportChat && (
+                        <p>{report?.aiSummary}</p>
 
-                            <div className="report-summary">
+                    </div>
 
-                                <h2>{report?.fileName}</h2>
+                )
+            }
 
-                                <p>{report?.aiSummary}</p>
+            <div className="chat-box">
 
-                            </div>
+                {
+                    !historyLoaded && (
+                        <p className="loading-text">
+                            Loading conversation...
+                        </p>
+                    )
+                }
 
-                        )
+                {
+                    messages.map((msg, index) => (
+
+                        <div
+                            key={index}
+                            className={`message ${msg.sender}`}
+                        >
+
+                            {
+                                msg.sender === "user"
+                                    ? <User size={18} />
+                                    : <Bot size={18} />
+                            }
+
+                            <span>
+                                {
+                                    msg.sender === "ai"
+                                        ? (
+                                            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                                {msg.text}
+                                            </ReactMarkdown>
+                                        )
+                                        : msg.text
+                                }
+                            </span>
+
+                        </div>
+
+                    ))
+                }
+
+                {
+                    loading &&
+
+                    <div className="message ai">
+
+                        <Bot size={18} />
+
+                        <span>Thinking...</span>
+
+                    </div>
+                }
+
+            </div>
+
+            <div className="chat-input">
+
+                <input
+                    type="text"
+                    placeholder="Ask AI anything..."
+                    value={question}
+                    onChange={(e) => setQuestion(e.target.value)}
+                    onKeyDown={(e) =>
+                        e.key === "Enter" && sendQuestion()
                     }
+                />
 
-                    <div className="chat-box">
-
-                        {
-
-                            messages.map((msg, index) => (
-
-                                <div
-
-                                    key={index}
-
-                                    className={`message ${msg.sender}`}
-
-                                >
-
-                                    {
-
-                                        msg.sender === "user"
-
-                                            ?
-
-                                            <User size={18} />
-
-                                            :
-
-                                            <Bot size={18} />
-
-                                    }
-
-                                    <span>
-
-                                        {msg.text}
-
-                                    </span>
-
-                                </div>
-
-                            ))
-
-                        }
-
-                        {
-
-                            loading &&
-
-                            <div className="message ai">
-
-                                <Bot size={18} />
-
-                                <span>
-
-                                    Thinking...
-
-                                </span>
-
-                            </div>
-
-                        }
-
-                    </div>
-
-                    <div className="chat-input">
-
-                        <input
-
-                            type="text"
-
-                            placeholder="Ask AI anything about your report..."
-
-                            value={question}
-
-                            onChange={(e) =>
-
-                                setQuestion(e.target.value)
-
-                            }
-
-                            onKeyDown={(e) =>
-
-                                e.key === "Enter" && sendQuestion()
-
-                            }
-
-                        />
-
-                        <button onClick={sendQuestion}>
-
-                            <Send size={18} />
-
-                        </button>
-
-                    </div>
-
-                </div>
+                <button onClick={sendQuestion}>
+                    <Send size={18} />
+                </button>
 
             </div>
 
         </div>
 
-    );
+    </DashboardLayout>
+
+);
 
 };
 

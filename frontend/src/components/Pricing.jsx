@@ -1,3 +1,4 @@
+import "./Pricing.css";
 import { Check } from "lucide-react";
 
 const plans = [
@@ -40,62 +41,62 @@ const plans = [
 
 const Pricing = () => {
   return (
-    <section id="pricing" className="py-24 bg-slate-50">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="pricing">
 
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold">
-            Pricing Plans
-          </h2>
+      <div className="pricing-container">
 
-          <p className="text-slate-600 mt-4">
-            Choose the plan that fits your needs.
-          </p>
+        <div className="pricing-header">
+
+          <h2>Pricing Plans</h2>
+
+          <p>Choose the plan that fits your needs.</p>
+
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="pricing-grid">
 
           {plans.map((plan, index) => (
 
             <div
               key={index}
-              className={`rounded-3xl p-8 ${
-                plan.highlight
-                  ? "bg-blue-600 text-white scale-105"
-                  : "bg-white"
-              } shadow-lg`}
+              className={`pricing-card ${
+                plan.highlight ? "active-plan" : ""
+              }`}
             >
-              <h3 className="text-2xl font-bold">
-                {plan.title}
-              </h3>
 
-              <h1 className="text-5xl font-bold mt-6">
-                {plan.price}
-              </h1>
+              <h3>{plan.title}</h3>
 
-              <div className="mt-8 space-y-4">
+              <h1>{plan.price}</h1>
+
+              <div className="pricing-features">
 
                 {plan.features.map((feature, i) => (
-                  <div key={i} className="flex items-center gap-3">
+
+                  <div
+                    className="feature-item"
+                    key={i}
+                  >
 
                     <Check size={18} />
 
                     <span>{feature}</span>
 
                   </div>
+
                 ))}
 
               </div>
 
               <button
-                className={`mt-10 w-full py-3 rounded-xl font-semibold ${
+                className={
                   plan.highlight
-                    ? "bg-white text-blue-600"
-                    : "bg-blue-600 text-white"
-                }`}
+                    ? "active-btn"
+                    : "normal-btn"
+                }
               >
                 {plan.button}
               </button>
+
             </div>
 
           ))}
@@ -103,6 +104,7 @@ const Pricing = () => {
         </div>
 
       </div>
+
     </section>
   );
 };

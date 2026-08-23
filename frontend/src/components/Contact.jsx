@@ -1,134 +1,120 @@
+import "./Contact.css";
+
 import { Mail, Phone, MapPin } from "lucide-react";
 
 const Contact = () => {
-  return (
-    <section
-      id="contact"
-      className="py-24 bg-white"
-    >
-      <div className="max-w-7xl mx-auto px-6">
 
-        <div className="text-center mb-16">
+    return (
 
-          <h2 className="text-4xl font-bold text-slate-900">
-            Contact Us
-          </h2>
+        <section className="contact">
 
-          <p className="text-slate-600 mt-4">
-            We'd love to hear from you.
-          </p>
+            <div className="contact-container">
 
-        </div>
+                <div className="contact-header">
 
-        <div className="grid lg:grid-cols-2 gap-12">
+                    <h2>Contact Us</h2>
 
-          {/* Left */}
+                    <p>We'd love to hear from you.</p>
 
-          <div className="space-y-8">
+                </div>
 
-            <div className="flex gap-4">
+                <div className="contact-grid">
 
-              <div className="bg-blue-100 p-4 rounded-xl">
+                    {/* Left */}
 
-                <Phone className="text-blue-600"/>
+                    <div className="contact-info">
 
-              </div>
+                        <div className="contact-item">
 
-              <div>
+                            <div className="contact-icon">
 
-                <h3 className="font-semibold text-xl">
-                  Phone
-                </h3>
+                                <Phone />
 
-                <p className="text-slate-600">
-                  +91 9876543210
-                </p>
+                            </div>
 
-              </div>
+                            <div>
+
+                                <h3>Phone</h3>
+
+                                <p>+91 7231942192</p>
+
+                            </div>
+
+                        </div>
+
+                        <div className="contact-item">
+
+                            <div className="contact-icon">
+
+                                <Mail />
+
+                            </div>
+
+                            <div>
+
+                                <h3>Email</h3>
+
+                                <p>prajapatdhiraj658@gmail.com</p>
+
+                            </div>
+
+                        </div>
+
+                        <div className="contact-item">
+
+                            <div className="contact-icon">
+
+                                <MapPin />
+
+                            </div>
+
+                            <div>
+
+                                <h3>Address</h3>
+
+                                <p>Jaipur, Rajasthan, India</p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    {/* Right */}
+
+                    <form className="contact-form">
+
+                        <input
+                            type="text"
+                            placeholder="Your Name"
+                        />
+
+                        <input
+                            type="email"
+                            placeholder="Email"
+                        />
+
+                        <textarea
+                            rows="6"
+                            placeholder="Message"
+                        />
+
+                        <button>
+
+                            Send Message (To Rakesh)
+
+                        </button>
+
+                    </form>
+
+                </div>
 
             </div>
 
-            <div className="flex gap-4">
+        </section>
 
-              <div className="bg-blue-100 p-4 rounded-xl">
+    );
 
-                <Mail className="text-blue-600"/>
-
-              </div>
-
-              <div>
-
-                <h3 className="font-semibold text-xl">
-                  Email
-                </h3>
-
-                <p className="text-slate-600">
-                  support@medimind.ai
-                </p>
-
-              </div>
-
-            </div>
-
-            <div className="flex gap-4">
-
-              <div className="bg-blue-100 p-4 rounded-xl">
-
-                <MapPin className="text-blue-600"/>
-
-              </div>
-
-              <div>
-
-                <h3 className="font-semibold text-xl">
-                  Address
-                </h3>
-
-                <p className="text-slate-600">
-                  Jaipur, Rajasthan, India
-                </p>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          {/* Right */}
-
-          <form className="bg-slate-50 rounded-3xl p-8 shadow">
-
-            <input
-              type="text"
-              placeholder="Your Name"
-              className="w-full p-4 rounded-xl border mb-5 outline-none focus:border-blue-600"
-            />
-
-            <input
-              type="email"
-              placeholder="Email"
-              className="w-full p-4 rounded-xl border mb-5 outline-none focus:border-blue-600"
-            />
-
-            <textarea
-              rows="6"
-              placeholder="Message"
-              className="w-full p-4 rounded-xl border mb-5 outline-none focus:border-blue-600"
-            />
-
-            <button
-              className="bg-blue-600 hover:bg-blue-700 transition text-white px-8 py-4 rounded-xl w-full"
-            >
-              Send Message
-            </button>
-
-          </form>
-
-        </div>
-
-      </div>
-    </section>
-  );
 };
 
 export default Contact;

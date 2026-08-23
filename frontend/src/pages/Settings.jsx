@@ -5,226 +5,205 @@ import { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 
+import { Lock, Trash2 } from "lucide-react";
+
 import {
-    Bell,
-    Lock,
-    Moon,
-    Globe,
-    Shield,
-    Trash2,
-} from "lucide-react";
+  changePassword,
+  deleteAccount,
+} from "../services/userService";
 
 const Settings = () => {
 
-    const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
-    const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
-    const [settings, setSettings] = useState({
+  const [passwords, setPasswords] = useState({
 
-        notifications: true,
+    currentPassword: "",
 
-        emailAlerts: true,
+    newPassword: "",
 
-        darkTheme: false,
+    confirmPassword: "",
 
-        language: "English",
+  });
+
+  const handleChange = (e) => {
+
+    setPasswords({
+
+      ...passwords,
+
+      [e.target.name]: e.target.value,
 
     });
 
-    const handleToggle = (field) => {
+  };
 
-        setSettings({
+  const handlePassword = async () => {
 
-            ...settings,
+    if (passwords.newPassword !== passwords.confirmPassword) {
 
-            [field]: !settings[field],
+      return alert("Passwords do not match");
 
-        });
+    }
 
-    };
+    try {
 
-    const handleLanguage = (e) => {
+      const data = await changePassword(passwords);
 
-        setSettings({
+      alert(data.message);
 
-            ...settings,
+      setPasswords({
 
-            language: e.target.value,
+        currentPassword: "",
 
-        });
+        newPassword: "",
 
-    };
+        confirmPassword: "",
 
-    return (
+      });
 
-        <div className="dashboard">
+    } catch (error) {
 
-            <Sidebar />
+      alert(error.response?.data?.message || "Password change failed");
 
-            <div className="dashboard-content">
+    }
 
-                <Topbar
-                    sidebarOpen={sidebarOpen}
-                    setSidebarOpen={setSidebarOpen}
-                    darkMode={darkMode}
-                    setDarkMode={setDarkMode}
-                    user={{
-                        name: "Rakesh",
-                        email: "rakesh@gmail.com",
-                    }}
-                />
+  };
 
-                <div className="settings-page">
+  const handleDelete = async () => {
 
-                    <div className="settings-header">
+    const ok = window.confirm(
+      "Are you sure you want to delete your account?"
+    );
 
-                        <h1>Settings</h1>
+    if (!ok) return;
 
-                        <p>
+    try {
 
-                            Manage your application preferences.
+      const data = await deleteAccount();
 
-                        </p>
+      alert(data.message);
 
-                    </div>
+      localStorage.removeItem("token");
 
-                    <div className="settings-container">
+      window.location.href = "/login";
 
-                        <div className="setting-card">
+    } catch (error) {
 
-                            <h3>
+      alert(error.response?.data?.message || "Delete failed");
 
-                                <Bell size={20}/>
+    }
 
-                                Notifications
+  };
 
-                            </h3>
+  return (
 
-                            <label>
+    <div className="dashboard">
 
-                                <span>Push Notifications</span>
+      <Sidebar />
 
-                                <input
-                                    type="checkbox"
-                                    checked={settings.notifications}
-                                    onChange={() =>
-                                        handleToggle("notifications")
-                                    }
-                                />
+      <div className="dashboard-content">
 
-                            </label>
+        <Topbar
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+          user={{
+            name: "Rakesh",
+            email: "rakesh@gmail.com",
+          }}
+        />
 
-                            <label>
+        <div className="settings-page">
 
-                                <span>Email Alerts</span>
+          <div className="settings-header">
 
-                                <input
-                                    type="checkbox"
-                                    checked={settings.emailAlerts}
-                                    onChange={() =>
-                                        handleToggle("emailAlerts")
-                                    }
-                                />
+            <h1>Settings</h1>
 
-                            </label>
+            <p>Manage your account.</p>
 
-                        </div>
+          </div>
 
-                        <div className="setting-card">
+          <div className="settings-container">
 
-                            <h3>
+            <div className="setting-card">
 
-                                <Moon size={20}/>
+              <h3>
 
-                                Appearance
+                <Lock size={20} />
 
-                            </h3>
+                Change Password
 
-                            <label>
+              </h3>
 
-                                <span>Dark Mode</span>
-
-                                <input
-                                    type="checkbox"
-                                    checked={settings.darkTheme}
-                                    onChange={() =>
-                                        handleToggle("darkTheme")
-                                    }
-                                />
-
-                            </label>
-
-                        </div>
-
-                        <div className="setting-card">
-
-                            <h3>
-
-                                <Globe size={20}/>
-
-                                Language
-
-                            </h3>
-
-                            <select
-                                value={settings.language}
-                                onChange={handleLanguage}
-                            >
-
-                                <option>English</option>
-
-                                <option>Hindi</option>
-
-                            </select>
-
-                        </div>
-
-                        <div className="setting-card">
-
-                            <h3>
-
-                                <Lock size={20}/>
-
-                                Security
-
-                            </h3>
-
-                            <button className="setting-btn">
-
-                                Change Password
-
-                            </button>
-
-                        </div>
-
-                        <div className="setting-card danger">
-
-                            <h3>
-
-                                <Trash2 size={20}/>
-
-                                Delete Account
-
-                            </h3>
-
-                            <button className="danger-btn">
-
-                                Delete My Account
-
-                            </button>
-
-                        </div>
-
-                    </div>
-
-                </div>
+              <input
+                type="password"
+                name="currentPassword"
+                placeholder="Current Password"
+                value={passwords.currentPassword}
+                onChange={handleChange}
+              />
+
+              <input
+                type="password"
+                name="newPassword"
+                placeholder="New Password"
+                value={passwords.newPassword}
+                onChange={handleChange}
+              />
+
+              <input
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                value={passwords.confirmPassword}
+                onChange={handleChange}
+              />
+
+              <button
+                className="setting-btn"
+                onClick={handlePassword}
+              >
+                Update Password
+              </button>
 
             </div>
 
+            <div className="setting-card danger">
+
+              <h3>
+
+                <Trash2 size={20} />
+
+                Delete Account
+
+              </h3>
+
+              <p>
+                This action cannot be undone.
+              </p>
+
+              <button
+                className="danger-btn"
+                onClick={handleDelete}
+              >
+                Delete My Account
+              </button>
+
+            </div>
+
+          </div>
+
         </div>
 
-    );
+      </div>
+
+    </div>
+
+  );
 
 };
 

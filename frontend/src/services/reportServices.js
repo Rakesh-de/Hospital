@@ -1,6 +1,8 @@
 import api from "./api";
 
-/* ================= Upload Report ================= */
+/* ================================
+   Upload Report
+================================ */
 
 export const uploadReport = async (formData) => {
 
@@ -15,40 +17,35 @@ export const uploadReport = async (formData) => {
   );
 
   return data;
-
 };
 
-/* ================= Get All Reports ================= */
+/* ================================
+   Get All Reports
+================================ */
 
-// export const getReports = async () => {
+export const getReports = async () => {
 
-//   const { data } = await api.get("/reports");
+  const { data } = await api.get("/reports");
 
-//   return data;
+  return data;
+};
 
-// };
+/* ================================
+   Get Single Report
+================================ */
 
-/* ================= Get Single Report ================= */
+export const getReport = async (id) => {
 
-// export const getReport = async (id) => {
+  const { data } = await api.get(
+    `/reports/${id}`
+  );
 
-//   const { data } = await api.get(`/reports/${id}`);
+  return data;
+};
 
-//   return data;
-
-// };
-
-/* ================= Delete Report ================= */
-
-// export const deleteReport = async (id) => {
-
-//   const { data } = await api.delete(`/reports/${id}`);
-
-//   return data;
-
-// };
-
-/* ================= AI Analyze ================= */
+/* ================================
+   Analyze Report
+================================ */
 
 export const analyzeReport = async (id) => {
 
@@ -57,55 +54,69 @@ export const analyzeReport = async (id) => {
   );
 
   return data;
-
 };
 
-// Dashboard
+/* ================================
+   Dashboard Stats
+================================ */
+
 export const getDashboardStats = async () => {
-  const { data } = await api.get("/reports/dashboard");
+
+  const { data } = await api.get(
+    "/reports/dashboard"
+  );
+
   return data;
 };
 
-/* ================= Download Report ================= */
+/* ================================
+   Download Report
+================================ */
 
-// export const downloadReport = async (id) => {
-
-//   const response = await api.get(
-//     `/reports/${id}/download`,
-//     {
-//       responseType: "blob",
-//     }
-//   );
-
-//   return response;
-
-// };
-
-
-
-
-
-
-// Get All Reports
-export const getReports = async () => {
-  const { data } = await api.get("/reports");
-  return data;
-};
-
-// Get Single Report
-export const getReport = async (id) => {
-  const { data } = await api.get(`/reports/${id}`);
-  return data;
-};
-
-// Download Report
 export const downloadReport = async (id) => {
-  const { data } = await api.get(`/reports/${id}/download`);
+
+  const { data } = await api.get(
+    `/reports/${id}/download`
+  );
+
   return data;
 };
 
-// Delete Report
+/* ================================
+   Delete Report
+================================ */
+
 export const deleteReport = async (id) => {
-  const { data } = await api.delete(`/reports/${id}`);
+
+  const { data } = await api.delete(
+    `/reports/${id}`
+  );
+
   return data;
+};
+
+/* ================================
+   Refresh Report
+================================ */
+
+export const refreshReport = async (id) => {
+
+  const { data } = await api.get(
+    `/reports/${id}`
+  );
+
+  return data.report;
+};
+
+/* ================================
+   Re Analyze Report
+================================ */
+
+export const reAnalyzeReport = async (id) => {
+
+  await analyzeReport(id);
+
+  const latest = await refreshReport(id);
+
+  return latest;
 };

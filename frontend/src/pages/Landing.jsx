@@ -10,7 +10,7 @@ import Footer from "../components/Footer";
 const Landing = () => {
   return (
     <>
-      <Navbar />
+      
       <Hero />
       <Features />
       <Stats />

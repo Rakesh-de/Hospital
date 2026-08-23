@@ -1,49 +1,49 @@
-from langchain_huggingface import HuggingFaceEmbeddings
+# from langchain_huggingface import HuggingFaceEmbeddings
 
-from langchain_chroma import Chroma
+# from langchain_chroma import Chroma
 
-embedding = HuggingFaceEmbeddings(
+# embedding = HuggingFaceEmbeddings(
 
-    model_name="sentence-transformers/all-MiniLM-L6-v2"
+#     model_name="sentence-transformers/all-MiniLM-L6-v2"
 
-)
+# )
 
-db = Chroma(
+# db = Chroma(
 
-    persist_directory="rag/chroma_db",
+#     persist_directory="rag/chroma_db",
 
-    embedding_function=embedding
+#     embedding_function=embedding
 
-)
+# )
 
-retriever = db.as_retriever(
+# retriever = db.as_retriever(
 
-    search_kwargs={
+#     search_kwargs={
 
-        "k":5
+#         "k":5
 
-    }
+#     }
 
-)
+# )
 
-def rag_agent(state):
+# def rag_agent(state):
 
-    query = state["text"]
+#     query = state["text"]
 
-    docs = retriever.invoke(query)
+#     docs = retriever.invoke(query)
 
-    context = "\n\n".join(
+#     context = "\n\n".join(
 
-        [
+#         [
 
-            doc.page_content
+#             doc.page_content
 
-            for doc in docs
+#             for doc in docs
 
-        ]
+#         ]
 
-    )
+#     )
 
-    state["context"] = context
+#     state["context"] = context
 
-    return state
+#     return state

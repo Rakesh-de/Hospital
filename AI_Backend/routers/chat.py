@@ -86,41 +86,32 @@ class ChatRequest(BaseModel):
 #     }
 
 
-# @router.get("/history/{user_id}")
-# async def history(user_id: str):
+@router.get("/history/{user_id}")
+async def history(user_id: str):
 
-#     chats = await get_chat_history(user_id)
+    chats = await get_chat_history(user_id)
 
-#     return {
-#         "success": True,
-#         "history": chats
-#     }
+    return {
+        "success": True,
+        "history": chats
+    }
 
 
 
 @router.post("/")
 async def ask_ai(request: ChatRequest):
-
     try:
+        history = []
+        if request.user_id:
+            history = await get_chat_history(request.user_id)
 
-        print("Question :", request.question)
+        answer = await chat_with_ai(request.question, history)
 
-        answer = await chat_with_ai(request.question)
+        if request.user_id:
+            await save_chat(request.user_id, request.question, answer)
 
-        print("Answer :", answer)
-
-        return {
-            "success": True,
-            "answer": answer
-        }
-
+        return {"success": True, "answer": answer}
     except Exception as e:
-
         import traceback
-
         traceback.print_exc()
-
-        return {
-            "success": False,
-            "error": str(e)
-        }
+        return {"success": False, "error": str(e)}

@@ -1,12 +1,24 @@
 from services.ocr_service import extract_image_text
 
-
 def ocr_agent(state):
 
-    image_path = state["image_path"]
+    print(">>> OCR Agent")
 
-    text = extract_image_text(image_path)
+    # Vision OCR already available
+    vision = state.get("vision", {})
 
-    state["ocr_text"] = text
+    if vision.get("ocr_text"):
+
+        print("Using Vision OCR")
+
+        state["text"] = vision["ocr_text"]
+
+        return state
+
+    print("Using EasyOCR")
+
+    path = state["image_path"]
+
+    state["text"] = extract_image_text(path)
 
     return state

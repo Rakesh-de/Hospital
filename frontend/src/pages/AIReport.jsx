@@ -1,8 +1,8 @@
 import "./AIReport.css";
 
 import { useEffect, useState } from "react";
-
 import { useParams } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
@@ -15,31 +15,60 @@ const AIReport = () => {
 
     const [report, setReport] = useState(null);
 
+    const [loading, setLoading] = useState(true);
+
     useEffect(() => {
 
-        const fetchReport = async () => {
+        const loadReport = async () => {
 
             try {
 
                 const data = await getReport(id);
 
+                console.log(data);
+
                 setReport(data.report);
 
-            }
-
-            catch (err) {
+            } catch (err) {
 
                 console.log(err);
+
+            } finally {
+
+                setLoading(false);
 
             }
 
         };
 
-        fetchReport();
+        loadReport();
 
     }, [id]);
 
-    if (!report) return <h2>Loading...</h2>;
+    if (loading)
+        return <h2 className="loading">Loading Report...</h2>;
+
+    if (!report)
+        return <h2 className="loading">No Report Found</h2>;
+
+    const vision = report.vision || {};
+
+    const ocr =
+        report.ocr ||
+        report.extractedText ||
+        report.text ||
+        "";
+
+    const prescription =
+        report.prescription || {};
+
+    const summary =
+        report.summary ||
+        report.aiSummary ||
+        "";
+
+    const medicines =
+        prescription.medicines || [];
 
     return (
 
@@ -53,77 +82,7 @@ const AIReport = () => {
 
                 <div className="ai-report">
 
-                    <h1>AI Medical Analysis</h1>
-
-                    <div className="report-box">
-
-                        <h2>{report.fileName}</h2>
-
-                        <p>
-
-                            <strong>Status :</strong>
-
-                            {report.analysisStatus}
-
-                        </p>
-
-                        <p>
-
-                            <strong>Risk Level :</strong>
-
-                            {report.riskLevel}
-
-                        </p>
-
-                        <p>
-
-                            <strong>Confidence :</strong>
-
-                            {report.confidenceScore}%
-
-                        </p>
-
-                    </div>
-
-                    <div className="section">
-
-                        <h2>AI Summary</h2>
-
-                        <p>{report.aiSummary}</p>
-
-                    </div>
-
-                    <div className="section">
-
-                        <h2>Diagnosis</h2>
-
-                        <p>{report.diagnosis}</p>
-
-                    </div>
-
-                    <div className="section">
-
-                        <h2>Recommendations</h2>
-
-                        <ul>
-
-                            {
-
-                                report.recommendations.map((item,index)=>(
-
-                                    <li key={index}>
-
-                                        {item}
-
-                                    </li>
-
-                                ))
-
-                            }
-
-                        </ul>
-
-                    </div>
+                    {/* Header */}
 
                 </div>
 

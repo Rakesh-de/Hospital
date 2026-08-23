@@ -1,4 +1,6 @@
-import { NavLink } from "react-router-dom";
+import "./Sidebar.css";
+
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   MessageSquare,
@@ -9,118 +11,197 @@ import {
   Shield,
   LogOut,
   HeartPulse,
-} from "lucide-react";
-import {
-  Upload
+  Upload,
+  X,
 } from "lucide-react";
 
-import "./Sidebar.css";
+import { useUI } from "../context/UIContext";
+import { useAuth } from "../context/AuthContext";
 
 const Sidebar = () => {
+
+  const navigate = useNavigate();
+
+  const { sidebarOpen, setSidebarOpen } = useUI();
+
+  const { logout } = useAuth();
+
+  const isMobile = window.innerWidth <= 768;
+
+  const handleLogout = () => {
+
+    logout();
+
+    navigate("/login");
+
+  };
+
+  const closeSidebar = () => {
+
+    if (isMobile) {
+
+      setSidebarOpen(false);
+
+    }
+
+  };
+
   return (
-    <aside className="sidebar">
+    <>
+      {/* Overlay only Mobile */}
 
-      <div className="sidebar-logo">
+      {isMobile && sidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
 
-        <HeartPulse size={32} />
+      <aside
+        className={`sidebar ${
+          isMobile
+            ? sidebarOpen
+              ? "show"
+              : "hide"
+            : ""
+        }`}
+      >
+        {/* Logo */}
 
-        <div>
-          <h2>MediMind</h2>
-          <span>AI Healthcare</span>
+        <div className="sidebar-logo">
+
+          <div className="logo-left">
+
+            <HeartPulse size={30} />
+
+            <div>
+
+              <h2>MediMind</h2>
+
+              <span>AI Healthcare</span>
+
+            </div>
+
+          </div>
+
+          {/* X only Mobile */}
+
+          {isMobile && (
+            <button
+              className="close-sidebar"
+              onClick={() => setSidebarOpen(false)}
+            >
+              <X size={20} />
+            </button>
+          )}
         </div>
 
-      </div>
+        {/* Menu */}
 
-      <nav className="sidebar-menu">
+        <nav className="sidebar-menu">
 
-        <NavLink
-          to="/dashboard"
-          className={({ isActive }) =>
-            isActive ? "menu-item active" : "menu-item"
-          }
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              isActive ? "menu-item active" : "menu-item"
+            }
+            onClick={closeSidebar}
+          >
+            <LayoutDashboard size={20} />
+            <span>Dashboard</span>
+          </NavLink>
+
+          <NavLink
+            to="/upload-report"
+            className={({ isActive }) =>
+              isActive ? "menu-item active" : "menu-item"
+            }
+            onClick={closeSidebar}
+          >
+            <Upload size={20} />
+            <span>Upload Report</span>
+          </NavLink>
+
+          <NavLink
+            to="/chat"
+            className={({ isActive }) =>
+              isActive ? "menu-item active" : "menu-item"
+            }
+            onClick={closeSidebar}
+          >
+            <MessageSquare size={20} />
+            <span>AI Assistant</span>
+          </NavLink>
+
+          <NavLink
+            to="/reports"
+            className={({ isActive }) =>
+              isActive ? "menu-item active" : "menu-item"
+            }
+            onClick={closeSidebar}
+          >
+            <FileText size={20} />
+            <span>Reports</span>
+          </NavLink>
+
+          <NavLink
+            to="/appointments"
+            className={({ isActive }) =>
+              isActive ? "menu-item active" : "menu-item"
+            }
+            onClick={closeSidebar}
+          >
+            <CalendarDays size={20} />
+            <span>Appointments</span>
+          </NavLink>
+
+          <NavLink
+            to="/profile"
+            className={({ isActive }) =>
+              isActive ? "menu-item active" : "menu-item"
+            }
+            onClick={closeSidebar}
+          >
+            <User size={20} />
+            <span>Profile</span>
+          </NavLink>
+
+          <NavLink
+            to="/settings"
+            className={({ isActive }) =>
+              isActive ? "menu-item active" : "menu-item"
+            }
+            onClick={closeSidebar}
+          >
+            <Settings size={20} />
+            <span>Settings</span>
+          </NavLink>
+
+          <NavLink
+            to="/admin"
+            className={({ isActive }) =>
+              isActive ? "menu-item active" : "menu-item"
+            }
+            onClick={closeSidebar}
+          >
+            <Shield size={20} />
+            <span>Admin</span>
+          </NavLink>
+
+        </nav>
+
+        {/* Logout */}
+
+        <button
+          className="logout-btn"
+          onClick={handleLogout}
         >
-          <LayoutDashboard size={20} />
-          <span>Dashboard</span>
-        </NavLink>
+          <LogOut size={20} />
+          Logout
+        </button>
 
-        <NavLink
-          to="/upload-report"
-          className={({ isActive }) =>
-            isActive ? "menu-item active" : "menu-item"
-          }
-        >
-          <Upload size={20} />
-          <span>Upload Report</span>
-        </NavLink>
-        
-        <NavLink
-          to="/chat"
-          className={({ isActive }) =>
-            isActive ? "menu-item active" : "menu-item"
-          }
-        >
-          <MessageSquare size={20} />
-          <span>AI Assistant</span>
-        </NavLink>
-
-        <NavLink
-          to="/reports"
-          className={({ isActive }) =>
-            isActive ? "menu-item active" : "menu-item"
-          }
-        >
-          <FileText size={20} />
-          <span>Medical Reports</span>
-        </NavLink>
-
-        <NavLink
-          to="/appointments"
-          className={({ isActive }) =>
-            isActive ? "menu-item active" : "menu-item"
-          }
-        >
-          <CalendarDays size={20} />
-          <span>Appointments</span>
-        </NavLink>
-
-        <NavLink
-          to="/profile"
-          className={({ isActive }) =>
-            isActive ? "menu-item active" : "menu-item"
-          }
-        >
-          <User size={20} />
-          <span>Profile</span>
-        </NavLink>
-
-        <NavLink
-          to="/settings"
-          className={({ isActive }) =>
-            isActive ? "menu-item active" : "menu-item"
-          }
-        >
-          <Settings size={20} />
-          <span>Settings</span>
-        </NavLink>
-
-        <NavLink
-          to="/admin"
-          className={({ isActive }) =>
-            isActive ? "menu-item active" : "menu-item"
-          }
-        >
-          <Shield size={20} />
-          <span>Admin</span>
-        </NavLink>
-
-      </nav>
-
-      <button className="logout-btn">
-        <LogOut size={20} />
-        Logout
-      </button>
-
-    </aside>
+      </aside>
+    </>
   );
 };
 

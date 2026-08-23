@@ -148,3 +148,88 @@
     transform: translateX(0);
   }
 }
+
+.sidebar {
+  transition: 0.3s ease;
+   transform:translateX(0);
+
+}
+
+.sidebar.show {
+  transform: translateX(0);
+}
+
+.sidebar.hide {
+  transform: translateX(-100%);
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 998;
+}
+
+.close-sidebar{
+  display:none;
+  border:none;
+  background:transparent;
+  color:white;
+  cursor:pointer;
+}
+
+.logo-left{
+  display:flex;
+  gap:15px;
+  align-items:center;
+}
+
+@media(max-width:992px){
+
+.sidebar{
+    z-index:999;
+}
+
+.close-sidebar{
+    display:block;
+}
+
+}
+
+.sidebar{
+
+    width:280px;
+
+    transition:.35s ease;
+
+}
+
+.sidebar.closed{
+
+    transform:translateX(-100%);
+
+}
+
+@media (max-width:768px){
+
+.sidebar{
+
+    transform:translateX(-100%);
+
+    width:270px;
+
+}
+
+.sidebar.open{
+
+    transform:translateX(0);
+
+}
+
+.sidebar.closed{
+
+    transform:translateX(-100%);
+
+}
+
+}

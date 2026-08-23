@@ -26,8 +26,8 @@ import Features from "./pages/Features";
 import Pricing from "./pages/Pricing";
 import Contact from "./pages/Contact";
 
-import Report from "./pages/Report";
-
+import Reports from "./pages/Reports";
+import AdminDashboard from "./pages/AdminDashboard";
 import Profile from "./pages/Profile";
 import Appointments from "./pages/Appointments";
 
@@ -36,6 +36,7 @@ import Settings from "./pages/Settings";
 import UploadReport from "./components/upload/UploadReport";
 import ProtectedRoute from "./components/ProtectedRoute";
 
+import ReportDetails from "./pages/ReportDetails";
 function App() {
 
     return (
@@ -57,6 +58,7 @@ function App() {
             <Route path="/features" element={<Features />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/contact" element={<Contact />} />
+            
             <Route
                 path="/report/:id"
                 element={
@@ -92,7 +94,7 @@ function App() {
                 path="/reports"
                 element={
                     <ProtectedRoute>
-                        <Report />
+                        <Reports />
                     </ProtectedRoute>
                 }
             />
@@ -133,14 +135,22 @@ function App() {
             />
 
 
-            {/* <Route
+             <Route
                 path="/admin"
                 element={
                     <ProtectedRoute>
                         <AdminDashboard />
                     </ProtectedRoute>
+                } 
+            />
+            <Route
+                path="/reports/:id"
+                element={
+                    <ProtectedRoute>
+                        <ReportDetails />
+                    </ProtectedRoute>
                 }
-            /> */}
+            />
 
 
             <Route

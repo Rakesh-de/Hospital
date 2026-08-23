@@ -10,7 +10,7 @@ import {
   getDashboardStats,
 } from "../controllers/reportController.js";
 
-import protect from "../middleware/authMiddleware.js";
+import { protect } from "../middleware/authMiddleware.js";
 import upload from "../middleware/upload.js";
 
 const router = express.Router();
@@ -18,10 +18,8 @@ const router = express.Router();
 /*
 =========================================
 Upload Report
-POST /api/reports/upload
 =========================================
 */
-
 router.post(
   "/upload",
   protect,
@@ -31,11 +29,20 @@ router.post(
 
 /*
 =========================================
-Get All Reports
-GET /api/reports
+Dashboard
 =========================================
 */
+router.get(
+  "/dashboard",
+  protect,
+  getDashboardStats
+);
 
+/*
+=========================================
+Get All Reports
+=========================================
+*/
 router.get(
   "/",
   protect,
@@ -44,11 +51,31 @@ router.get(
 
 /*
 =========================================
-Get Single Report
-GET /api/reports/:id
+Download Report
 =========================================
 */
+router.get(
+  "/:id/download",
+  protect,
+  downloadReport
+);
 
+/*
+=========================================
+Analyze Report
+=========================================
+*/
+router.post(
+  "/:id/analyze",
+  protect,
+  analyzeReport
+);
+
+/*
+=========================================
+Get Single Report
+=========================================
+*/
 router.get(
   "/:id",
   protect,
@@ -58,51 +85,12 @@ router.get(
 /*
 =========================================
 Delete Report
-DELETE /api/reports/:id
 =========================================
 */
-
 router.delete(
   "/:id",
   protect,
   deleteReport
-);
-
-/*
-=========================================
-Download Report
-GET /api/reports/:id/download
-=========================================
-*/
-
-router.get(
-  "/:id/download",
-  protect,
-  downloadReport
-);
-
-router.post(
-    "/:id/analyze",
-    protect,
-    analyzeReport
-);
-/*
-=========================================
-Analyze Report
-POST /api/reports/:id/analyze
-=========================================
-*/
-
-router.get(
-    "/dashboard",
-    protect,
-    getDashboardStats
-);
-
-router.post(
-  "/:id/analyze",
-  protect,
-  analyzeReport
 );
 
 export default router;

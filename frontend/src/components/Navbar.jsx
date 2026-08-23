@@ -1,186 +1,100 @@
 import { Link } from "react-router-dom";
 import { Menu, X, Stethoscope } from "lucide-react";
 import { useState } from "react";
+import "./Navbar.css";
 
 const Navbar = () => {
 
-    const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-    return (
+  return (
 
-        <nav className="fixed top-0 left-0 w-full z-50 bg-white/80 backdrop-blur-md shadow-sm">
+    <nav className="navbar">
 
-            <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div className="navbar-container">
 
-                {/* Logo */}
+        {/* Logo */}
 
-                <Link
-                    to="/"
-                    className="flex items-center gap-2"
-                >
+        <Link to="/" className="logo">
 
-                    <div className="bg-blue-600 text-white p-2 rounded-xl">
+          <div className="logo-icon">
+            <Stethoscope size={24} />
+          </div>
 
-                        <Stethoscope size={24} />
+          <div>
 
-                    </div>
+            <h2>MediMind AI</h2>
 
-                    <div>
+            <p>Smart Healthcare</p>
 
-                        <h1 className="text-xl font-bold text-slate-800">
+          </div>
 
-                            MediMind AI
+        </Link>
 
-                        </h1>
+        {/* Desktop Menu */}
 
-                        <p className="text-xs text-slate-500">
+        <div className="nav-links">
 
-                            Smart Healthcare
+          <Link to="/">Home</Link>
+          <Link to="/about">About</Link>
+          <Link to="/features">Features</Link>
+          <Link to="/pricing">Pricing</Link>
+          <Link to="/contact">Contact</Link>
 
-                        </p>
+        </div>
 
-                    </div>
+        {/* Buttons */}
 
-                </Link>
+        <div className="nav-buttons">
 
-                {/* Desktop Menu */}
+          <Link to="/login" className="login-btn">
+            Login
+          </Link>
 
-                <div className="hidden md:flex items-center gap-8">
+          <Link to="/register" className="register-btn">
+            Register
+          </Link>
 
-                    <Link
-                        to="/"
-                        className="font-medium text-slate-700 hover:text-blue-600 transition"
-                    >
-                        Home
-                    </Link>
+        </div>
 
-                    <Link
-                        to="/about"
-                        className="font-medium text-slate-700 hover:text-blue-600 transition"
-                    >
-                        About
-                    </Link>
+        {/* Mobile */}
 
-                    <Link
-                        to="/features"
-                        className="font-medium text-slate-700 hover:text-blue-600 transition"
-                    >
-                        Features
-                    </Link>
+        <button
+          className="menu-btn"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
 
-                    <Link
-                        to="/pricing"
-                        className="font-medium text-slate-700 hover:text-blue-600 transition"
-                    >
-                        Pricing
-                    </Link>
+          {menuOpen ? <X size={28}/> : <Menu size={28}/>}
 
-                    <Link
-                        to="/contact"
-                        className="font-medium text-slate-700 hover:text-blue-600 transition"
-                    >
-                        Contact
-                    </Link>
+        </button>
 
-                </div>
+      </div>
 
-                {/* Buttons */}
+      {menuOpen && (
 
-                <div className="hidden md:flex gap-3">
+        <div className="mobile-menu">
 
-                    <Link
-                        to="/login"
-                        className="px-5 py-2 rounded-xl border border-blue-600 text-blue-600 hover:bg-blue-50"
-                    >
+          <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
 
-                        Login
+          <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
 
-                    </Link>
+          <Link to="/features" onClick={() => setMenuOpen(false)}>Features</Link>
 
-                    <Link
-                        to="/register"
-                        className="px-5 py-2 rounded-xl bg-blue-600 text-white hover:bg-blue-700"
-                    >
+          <Link to="/pricing" onClick={() => setMenuOpen(false)}>Pricing</Link>
 
-                        Register
+          <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
 
-                    </Link>
+          <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
 
-                </div>
+          <Link to="/register" onClick={() => setMenuOpen(false)}>Register</Link>
 
-                {/* Mobile */}
+        </div>
 
-                <button
+      )}
 
-                    className="md:hidden"
+    </nav>
 
-                    onClick={() => setMenuOpen(!menuOpen)}
-
-                >
-
-                    {
-
-                        menuOpen ?
-
-                            <X size={28} />
-
-                            :
-
-                            <Menu size={28} />
-
-                    }
-
-                </button>
-
-            </div>
-
-            {
-
-                menuOpen && (
-
-                    <div className="md:hidden bg-white border-t">
-
-                        <div className="flex flex-col p-5 gap-4">
-
-                            <Link to="/" onClick={() => setMenuOpen(false)}>
-                                Home
-                            </Link>
-
-                            <Link to="/about" onClick={() => setMenuOpen(false)}>
-                                About
-                            </Link>
-
-                            <Link to="/features" onClick={() => setMenuOpen(false)}>
-                                Features
-                            </Link>
-
-                            <Link to="/pricing" onClick={() => setMenuOpen(false)}>
-                                Pricing
-                            </Link>
-
-                            <Link to="/contact" onClick={() => setMenuOpen(false)}>
-                                Contact
-                            </Link>
-
-                            <Link to="/login" onClick={() => setMenuOpen(false)}>
-                                Login
-                            </Link>
-
-                            <Link to="/register" onClick={() => setMenuOpen(false)}>
-                                Register
-                            </Link>
-
-                        </div>
-
-                    </div>
-
-                )
-
-            }
-
-        </nav>
-
-    );
+  );
 
 };
 

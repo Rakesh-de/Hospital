@@ -17,6 +17,18 @@ async def chat_with_ai(question):
     return response.content
 
 
+async def chat_with_ai(question, history=None):
+    history_text = ""
+    if history:
+        for h in history[-6:]:  # last 3 exchanges
+            history_text += f"User: {h['question']}\nAI: {h['answer']}\n"
+
+    response = await chat_chain.ainvoke({
+        "context": history_text,
+        "question": question
+    })
+    return response.content
+
 # -----------------------------
 # Report AI Chat
 # -----------------------------

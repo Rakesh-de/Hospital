@@ -1,65 +1,71 @@
-from langchain_groq import ChatGroq
-from langchain_core.prompts import PromptTemplate
-from langchain_core.output_parsers import JsonOutputParser
+# from langchain_groq import ChatGroq
+# from langchain_core.prompts import PromptTemplate
+# from langchain_core.output_parsers import JsonOutputParser
 
-llm = ChatGroq(
-    model="llama-3.3-70b-versatile",
-    temperature=0
-)
+# llm = ChatGroq(
+#     model="llama-3.3-70b-versatile",
+#     temperature=0
+# )
 
-parser = JsonOutputParser()
+# parser = JsonOutputParser()
 
-prompt = PromptTemplate(
+# prompt = PromptTemplate(
 
-template="""
+# template="""
 
-You are a senior physician.
+# You are a senior physician.
 
-Disease
+# Disease detected from previous medical analysis:
 
-{disease}
+# {disease}
 
-Generate
+# Rules:
 
-1. Medicines (General suggestion only)
+# - Use ONLY this disease.
+# - Never change disease.
+# - Never infer another disease.
+# - If disease is Unknown return empty recommendations.
+# - Never recommend medicines for diseases not mentioned.
 
-2. Diet
-
-3. Exercise
-
-4. Lifestyle
-
-5. Next medical tests
-
-Return JSON only.
-
-{format}
-
-""",
-
-input_variables=["disease"],
-
-partial_variables={
-
-"format":parser.get_format_instructions()
-
-}
-
-)
-
-chain = prompt | llm | parser
+# Return JSON only.
 
 
-def recommendation_agent(state):
+# {format}
 
-    disease = state["diagnosis"]["disease"]
+# """,
 
-    result = chain.invoke({
+# input_variables=["disease"],
 
-        "disease": disease
+# partial_variables={
 
-    })
+# "format":parser.get_format_instructions()
 
-    state["recommendation"] = result
+# }
 
-    return state
+# )
+
+# chain = prompt | llm | parser
+
+
+# def recommendation_agent(state):
+
+#     disease = state["diagnosis"].get("disease","").strip()
+
+#     if disease == "":
+#         state["recommendation"] = {
+#             "Disease": "Unknown",
+#             "Medicines": [],
+#             "Diet": [],
+#             "Exercise": [],
+#             "Lifestyle": [],
+#             "Next medical tests": []
+#         }
+#         return state
+
+#     result = chain.invoke({
+#         "disease": disease
+#     })
+
+#     state["recommendation"] = result
+
+#     return state

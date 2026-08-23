@@ -1,86 +1,376 @@
 import "./Topbar.css";
+
 import {
+
   Bell,
   Search,
   Menu,
   Sun,
-  Moon
+  Moon,
+  User,
+  LogOut,
+  Settings,
+
 } from "lucide-react";
 
-const Topbar = ({
-  sidebarOpen,
-  setSidebarOpen,
-  darkMode,
-  setDarkMode,
-  user
-}) => {
+import { useUI } from "../context/UIContext";
+
+import { useState } from "react";
+
+import { useNavigate } from "react-router-dom";
+
+import { useAuth } from "../context/AuthContext";
+
+import NotificationPanel from "./NotificationPanel";
+
+
+
+const Topbar = () => {
+
+  const navigate = useNavigate();
+
+  const { user, logout } = useAuth();
+
+
+
+  const {
+
+    sidebarOpen,
+    setSidebarOpen,
+
+    darkMode,
+    setDarkMode,
+
+    search,
+    setSearch,
+
+    notifications,
+    notificationOpen,
+    setNotificationOpen,
+
+    unreadCount,
+    markAllRead,
+
+  } = useUI();
+
+  const [profileOpen, setProfileOpen] = useState(false);
+
+  const handleLogout = () => {
+
+    logout();
+
+    navigate("/login");
+
+  };
 
   return (
 
     <header className="topbar">
 
+      {/* LEFT */}
+
       <div className="topbar-left">
-
+       {(window.innerWidth <= 768 || !sidebarOpen) && (
         <button
-          className="menu-btn"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-        >
-          <Menu size={22} />
-        </button>
 
+          className="menu-btn"
+
+          onClick={() => setSidebarOpen(true)}
+
+        >
+
+          <Menu size={22} />
+
+        </button>
+       )
+       }
         <div className="search-box">
 
           <Search size={18} />
 
           <input
-            type="text"
-            placeholder="Search reports, doctors, AI chat..."
+
+            value={search}
+
+            onChange={(e) =>
+
+              setSearch(e.target.value)
+
+            }
+
+            placeholder="Search reports, AI Chat..."
+
           />
 
         </div>
 
       </div>
 
+      {/* RIGHT */}
+
       <div className="topbar-right">
 
+        {/* Theme */}
+
         <button
+
           className="theme-btn"
-          onClick={() => setDarkMode(!darkMode)}
+
+          onClick={() =>
+
+            setDarkMode(!darkMode)
+
+          }
+
         >
-          {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+
+          {
+
+            darkMode
+
+              ?
+
+              <Sun size={20} />
+
+              :
+
+              <Moon size={20} />
+
+          }
+
         </button>
 
-        <button className="notification-btn">
+        {/* Notification */}
 
-          <Bell size={20} />
+        <div className="notification-wrapper">
 
-          <span className="notification-count">
-            3
-          </span>
+          <button
 
-        </button>
+            className="notification-btn"
 
-        <div className="profile-box">
+            onClick={() =>
 
-          <img
-            src={
-              user?.avatar ||
-              "https://i.pravatar.cc/100"
+              setNotificationOpen(
+
+                !notificationOpen
+
+              )
+
             }
-            alt="profile"
-          />
 
-          <div>
+          >
 
-            <h4>
-              {user?.name || "Rakesh"}
-            </h4>
+            <Bell size={20} />
 
-            <span>
-              {user?.email || "rakesh@gmail.com"}
-            </span>
+            {
+
+              unreadCount > 0 && (
+
+                <span className="notification-count">
+
+                  {unreadCount}
+
+                </span>
+
+              )
+
+            }
+
+          </button>
+
+          {
+
+            notificationOpen && (
+
+              <div className="notification-dropdown">
+
+                <div className="notification-header">
+
+                  <h4>
+
+                    Notifications
+
+                  </h4>
+
+                  <button
+
+                    onClick={markAllRead}
+
+                  >
+
+                    Mark all
+
+                  </button>
+
+                </div>
+
+                {
+
+                  notifications.length === 0
+
+                    ?
+
+                    <p>
+
+                      No Notifications
+
+                    </p>
+
+                    :
+
+                    notifications.map(item => (
+
+                      <div
+
+                        key={item._id}
+
+                        className={`notification-item ${item.read
+
+                          ?
+
+                          ""
+
+                          :
+
+                          "unread"
+
+                          }`}
+
+                      >
+
+                        <strong>
+
+                          {item.title}
+
+                        </strong>
+
+                        <p>
+
+                          {item.message}
+
+                        </p>
+
+                      </div>
+
+                    ))
+
+                }
+
+              </div>
+
+            )
+
+          }
+
+        </div>
+
+        {/* Profile */}
+
+        <div className="profile-wrapper">
+
+          <div
+
+            className="profile-box"
+
+            onClick={() =>
+
+              setProfileOpen(
+
+                !profileOpen
+
+              )
+
+            }
+
+          >
+
+            <img
+
+              src={
+
+                user?.avatar ||
+
+                "https://i.pravatar.cc/150"
+
+              }
+
+              alt=""
+
+            />
+
+            <div>
+
+              <h4>
+
+                {user?.name}
+
+              </h4>
+
+              <span>
+
+                {user?.email}
+
+              </span>
+
+            </div>
 
           </div>
+
+          {
+
+            profileOpen && (
+
+              <div className="profile-dropdown">
+
+                <button
+
+                  onClick={() =>
+
+                    navigate("/profile")
+
+                  }
+
+                >
+
+                  <User size={16} />
+
+                  Profile
+
+                </button>
+
+                <button
+
+                  onClick={() =>
+
+                    navigate("/settings")
+
+                  }
+
+                >
+
+                  <Settings size={16} />
+
+                  Settings
+
+                </button>
+
+                <button
+
+                  onClick={handleLogout}
+
+                >
+
+                  <LogOut size={16} />
+
+                  Logout
+
+                </button>
+
+              </div>
+
+            )
+
+          }
 
         </div>
 

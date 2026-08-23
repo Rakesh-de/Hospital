@@ -3,7 +3,7 @@ import "./AdminDashboard.css";
 
 
 import { useEffect, useState } from "react";
-import { getAdminDashboard } from "../services/adminServices";
+import { getAdminDashboard } from "../services/adminService";
 import Sidebar from "../components/Sidebar";
 import Topbar from "../components/Topbar";
 

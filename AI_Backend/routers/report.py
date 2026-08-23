@@ -30,6 +30,11 @@ async def upload_report(file: UploadFile = File(...)):
     else:
         extracted_text = extract_image_text(filepath)
 
+
+    if extracted_text.strip() == "":
+
+        extracted_text = "No readable text found."
+
     report = {
 
         "filename": file.filename,
@@ -121,13 +126,70 @@ async def analyze_report(report_id: str):
             "message": "Report not found"
         }
 
-    result = graph.invoke(
+    # result = graph.invoke(
 
-        {
-            "report": report["extracted_text"]
-        }
+    #     {
+    #         "report": report["extracted_text"]
+    #     }
 
-    )
+    # )
+
+    result = graph.invoke({
+
+    "file": report["filepath"],
+
+    "image_path": report["filepath"],
+
+    "text": "",
+
+    "context": "",
+
+    "vision": {
+        "report_type": "",
+        "ocr_text": "",
+        "doctor_notes": "",
+        "medicines": []
+    },
+
+    "lab_values": {},
+
+    "lab_analysis": {},
+
+    "clinical": {},
+
+    "diagnosis": {},
+
+    "prescription": {},
+
+    "drug_interactions": {},
+
+    "recommendation": {},
+
+    "medicine_schedule": [],
+
+    "comparison": {},
+
+    "summary": "",
+
+    "emergency": {}
+
+   })
+
+    print("\n================ GRAPH RESULT ================")
+ 
+    print("VISION")
+    print(result.get("vision"))
+
+    print("TEXT")
+    print(result.get("text"))
+
+    print("DIAGNOSIS")
+    print(result.get("diagnosis"))
+
+    print("=============================================\n")
+
+
+
 
     await reports_collection.update_one(
 
@@ -137,19 +199,133 @@ async def analyze_report(report_id: str):
 
         {
 
+            # "$set": {
+
+            #     "summary": result["summary"],
+
+            #     "diagnosis": result["diagnosis"],
+
+            #     "risk": result["risk"],
+
+            #     "recommendation": result["recommendation"],
+
+            #     "medical_context": result["medical_context"]
+
+            # }
+
             "$set": {
 
-                "summary": result["summary"],
+    # Existing
 
-                "diagnosis": result["diagnosis"],
+    "summary": result.get("summary"),
 
-                "risk": result["risk"],
+    "diagnosis": result.get("diagnosis"),
 
-                "recommendation": result["recommendation"],
+    "recommendation": result.get("recommendation"),
 
-                "medical_context": result["medical_context"]
+    "medical_context": result.get("context"),
 
-            }
+    "medicine_schedule": result.get("medicine_schedule"),
+
+    "emergency": result.get("emergency"),
+
+    # Vision
+
+    "vision": result.get("vision"),
+
+    # OCR
+
+    "extracted_text": result.get("text"),
+
+    # Lab
+
+    "lab_analysis": result.get("lab_analysis"),
+
+    "lab_values": result.get("lab_values"),
+
+    # Clinical Decision
+
+    "clinical": result.get("clinical"),
+
+    # Drug Interaction
+
+    "drug_interactions": result.get("drug_interactions"),
+
+    # Prescription
+
+    "prescription": result.get("prescription"),
+
+    # Comparison
+
+    "comparison": result.get("comparison"),
+
+    # Diagnosis Details
+
+    "health_score": result.get(
+        "diagnosis",
+        {}
+    ).get(
+        "health_score",
+        0
+    ),
+
+    "overall_health": result.get(
+        "diagnosis",
+        {}
+    ).get(
+        "overall_health",
+        ""
+    ),
+
+    "risk_level": result.get(
+        "diagnosis",
+        {}
+    ).get(
+        "risk_level",
+        ""
+    ),
+
+    "possible_conditions": result.get(
+        "diagnosis",
+        {}
+    ).get(
+        "possible_conditions",
+        []
+    ),
+
+    "abnormal_values": result.get(
+        "diagnosis",
+        {}
+    ).get(
+        "abnormal_values",
+        []
+    ),
+
+    "follow_up_tests": result.get(
+        "diagnosis",
+        {}
+    ).get(
+        "follow_up_tests",
+        []
+    ),
+
+    "doctor_notes": result.get(
+        "diagnosis",
+        {}
+    ).get(
+        "doctor_notes",
+        ""
+    ),
+
+    "medicines": result.get(
+        "diagnosis",
+        {}
+    ).get(
+        "medicines",
+        []
+    )
+
+}
 
         }
 

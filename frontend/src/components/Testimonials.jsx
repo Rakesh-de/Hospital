@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import "./Testimonials.css";
 import { Star } from "lucide-react";
 
 const testimonials = [
@@ -27,79 +27,71 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="testimonials">
 
-        <div className="text-center mb-16">
-          <span className="text-blue-600 font-semibold uppercase tracking-widest">
-            Testimonials
-          </span>
+      <div className="container">
 
-          <h2 className="text-4xl font-bold mt-4 text-slate-900">
-            Loved by Doctors & Patients
-          </h2>
+        <div className="section-header">
 
-          <p className="mt-4 text-slate-600">
-            Real experiences from our healthcare community.
-          </p>
+          <span>Testimonials</span>
+
+          <h2>Loved by Doctors & Patients</h2>
+
+          <p>Real experiences from our healthcare community.</p>
+
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="testimonial-grid">
 
           {testimonials.map((item, index) => (
-            <motion.div
+
+            <div
+              className="testimonial-card"
               key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.5,
-                delay: index * 0.15,
-              }}
-              viewport={{ once: true }}
-              className="bg-slate-50 rounded-3xl p-8 hover:shadow-xl transition"
             >
-              <div className="flex mb-5">
+
+              <div className="stars">
+
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
                     size={18}
-                    fill="#FACC15"
-                    color="#FACC15"
+                    fill="#facc15"
+                    color="#facc15"
                   />
                 ))}
+
               </div>
 
-              <p className="text-slate-600 leading-7">
+              <p className="review">
                 "{item.review}"
               </p>
 
-              <div className="flex items-center mt-8">
+              <div className="user">
 
                 <img
                   src={item.image}
                   alt={item.name}
-                  className="w-14 h-14 rounded-full object-cover"
                 />
 
-                <div className="ml-4">
+                <div>
 
-                  <h3 className="font-semibold text-slate-900">
-                    {item.name}
-                  </h3>
+                  <h3>{item.name}</h3>
 
-                  <p className="text-sm text-slate-500">
-                    {item.role}
-                  </p>
+                  <span>{item.role}</span>
 
                 </div>
 
               </div>
-            </motion.div>
+
+            </div>
+
           ))}
 
         </div>
 
       </div>
+
     </section>
   );
 };

@@ -13,6 +13,7 @@ import {
   deleteReport,
 } from "../services/reportServices";
 
+import DashboardLayout from "../layout/DashboardLayout";
 
 import {
   FileText,
@@ -101,228 +102,435 @@ const Dashboard = () => {
   };
   return (
 
-    <div className="dashboard">
+    <DashboardLayout>
 
-      <Sidebar />
+      <div className="dashboard-body">
 
-      <div className="dashboard-content">
-
-        <Topbar />
+        {/* Dashboard ka pura content yaha rahega */}
 
         <div className="dashboard-body">
 
+
+
           <div className="welcome-section">
 
+
+
             <h1>
+
               Welcome Back 👋
+
             </h1>
+
+
 
             <p>
 
+
+
               Here's your healthcare overview.
+
+
 
             </p>
 
+
+
           </div>
+
+
 
           <div className="stats-grid">
 
+
+
             {stats.map((item, index) => (
+
               <StatsCard
+
                 key={index}
+
                 title={item.title}
+
                 value={item.value}
+
                 icon={item.icon}
+
                 color={item.color}
+
                 percentage={item.percentage}
+
                 trend={item.trend}
+
               />
+
             ))}
 
 
 
+
+
+
+
           </div>
+
+
 
           <div className="activity-grid">
 
+
+
             {
+
               dashboardData?.activities?.map((activity, index) => (
+
+
 
                 <ActivityCard
 
+
+
                   key={index}
+
+
 
                   title={activity.title}
 
+
+
                   description={activity.description}
+
+
 
                   time={new Date(activity.time).toLocaleDateString()}
 
+
+
                   status={activity.status}
+
+
 
                 />
 
+
+
               ))
+
             }
 
+
+
           </div>
+
+
 
           <div className="dashboard-row">
 
+
+
             <div className="dashboard-card">
+
+
 
               <h2>Recent Reports</h2>
 
+
+
               <table className="report-table">
+
+
 
                 <thead>
 
+
+
                   <tr>
+
+
 
                     <th>Report</th>
 
+
+
                     <th>Type</th>
+
+
 
                     <th>Status</th>
 
+
+
                     <th>AI Score</th>
+
+
 
                     <th>Date</th>
 
+
+
                     <th>Action</th>
+
+
 
                   </tr>
 
+
+
                 </thead>
+
+
 
                 <tbody>
 
+
+
                   {dashboardData?.recentReports?.map((report) => (
+
+
 
                     <tr key={report._id}>
 
+
+
                       <td>{report.fileName}</td>
+
+
 
                       <td>{report.fileType.toUpperCase()}</td>
 
+
+
                       <td>
 
+
+
                         <span
+
                           className={
+
                             report.analysisStatus === "Completed"
+
                               ? "status completed"
+
                               : "status pending"
+
                           }
+
                         >
+
                           {report.analysisStatus}
+
                         </span>
 
+
+
                       </td>
+
+
 
                       <td>{report.confidenceScore}%</td>
 
-                      <td>
-                        {new Date(report.createdAt).toLocaleDateString()}
-                      </td>
+
 
                       <td>
+
+                        {new Date(report.createdAt).toLocaleDateString()}
+
+                      </td>
+
+
+
+                      <td>
+
+
 
                         <div className="table-actions">
 
+
+
                           <button
+
                             className="view-btn"
+
                             onClick={() => window.open(report.fileUrl, "_blank")}
+
                           >
+
                             View
+
                           </button>
+
                           <button
+
                             className="download-btn"
+
                             onClick={async () => {
+
+
 
                               const data = await downloadReport(report._id);
 
+
+
                               window.open(data.downloadUrl, "_blank");
 
+
+
                             }}
+
                           >
+
                             Download
+
                           </button>
 
+
+
                           <button
+
                             className="delete-btn"
+
                             onClick={() => handleDelete(report._id)}
+
                           >
+
                             Delete
+
                           </button>
+
+
 
                         </div>
 
+
+
                       </td>
+
+
 
                     </tr>
 
+
+
                   ))}
+
+
 
                 </tbody>
 
+
+
               </table>
 
+
+
             </div>
+
+
 
             <div className="dashboard-card">
 
+
+
               <h2>AI Health Summary</h2>
+
+
 
               <div className="health-summary">
 
+
+
                 <div className="summary-item">
+
                   <span>Overall Health Score</span>
 
+
+
                   <strong>
+
                     {dashboardData?.stats?.healthScore || 0}%
+
                   </strong>
+
+
 
                 </div>
 
+
+
                 <div className="summary-item">
+
+
 
                   <span>Risk Level</span>
 
+
+
                   <strong>
+
                     {dashboardData?.stats?.riskLevel || "N/A"}
+
                   </strong>
 
+
+
                 </div>
+
+
 
                 <div className="summary-item">
 
+
+
                   <span>Last Analysis</span>
 
+
+
                   <strong>
+
                     {dashboardData?.stats?.lastAnalysis
+
                       ? new Date(
+
                         dashboardData.stats.lastAnalysis
+
                       ).toLocaleDateString()
+
                       : "No Reports"}
+
                   </strong>
+
+
 
                 </div>
 
+
+
                 <button className="primary-btn">
+
                   View Full Analysis
+
                 </button>
+
+
 
               </div>
 
+
+
             </div>
 
+
+
           </div>
+
+
 
         </div>
 
       </div>
 
-    </div>
+    </DashboardLayout>
 
   );
 

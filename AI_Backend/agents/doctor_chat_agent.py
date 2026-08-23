@@ -1,94 +1,94 @@
-from langchain_groq import ChatGroq
+# from langchain_groq import ChatGroq
 
-from langchain_core.prompts import ChatPromptTemplate
+# from langchain_core.prompts import ChatPromptTemplate
 
-llm = ChatGroq(
+# llm = ChatGroq(
 
-    model="llama-3.3-70b-versatile",
+#     model="llama-3.3-70b-versatile",
 
-    temperature=0
+#     temperature=0
 
-)
+# )
 
-prompt = ChatPromptTemplate.from_messages(
+# prompt = ChatPromptTemplate.from_messages(
 
-[
+# [
 
-(
+# (
 
-"system",
+# "system",
 
-"""
+# """
 
-You are an experienced physician.
+# You are an experienced physician.
 
-Answer ONLY using
+# Answer ONLY using
 
-1 Uploaded Report
+# 1 Uploaded Report
 
-2 Medical Context
+# 2 Medical Context
 
-Never guess.
+# Never guess.
 
-If information is unavailable say
+# If information is unavailable say
 
-"I cannot determine this from the report."
+# "I cannot determine this from the report."
 
-"""
+# """
 
-),
+# ),
 
-(
+# (
 
-"human",
+# "human",
 
-"""
+# """
 
-Medical Context
+# Medical Context
 
-{context}
+# {context}
 
-Diagnosis
+# Diagnosis
 
-{diagnosis}
+# {diagnosis}
 
-Recommendations
+# Recommendations
 
-{recommendation}
+# {recommendation}
 
-Question
+# Question
 
-{question}
+# {question}
 
-"""
+# """
 
-)
+# )
 
-]
+# ]
 
-)
+# )
 
-chain = prompt | llm
+# chain = prompt | llm
 
 
-def doctor_chat_agent(state):
+# def doctor_chat_agent(state):
 
-    answer = chain.invoke(
+#     answer = chain.invoke(
 
-    {
+#     {
 
-        "context":state["context"],
+#         "context":state["context"],
 
-        "diagnosis":state["diagnosis"],
+#         "diagnosis":state["diagnosis"],
 
-        "recommendation":state["recommendation"],
+#         "recommendation":state["recommendation"],
 
-        "question":state["question"]
+#         "question":state["question"]
 
-    }
+#     }
 
-    )
+#     )
 
-    state["answer"]=answer.content
+#     state["answer"]=answer.content
 
-    return state
+#     return state
