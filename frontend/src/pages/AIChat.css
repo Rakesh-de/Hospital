@@ -1,4 +1,4 @@
-.chat-page{
+/* .chat-page{
     padding:30px;
     background:#f8fafc;
     min-height:100vh;
@@ -88,4 +88,132 @@
 .message-content ol,
 .message-content ul {
     padding-left: 22px;
+} */
+
+/* Full Viewport Container */
+/* Container: Phone aur Desktop dono me full view setup */
+.chat-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh; /* Mobile browser URL bar issue fix */
+    background: #ffffff;
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Chat Scroll Box */
+.chat-box {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Messages alignment & width */
+.message {
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    align-items: flex-start;
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.message span, 
+.message .message-content {
+    background: #f1f5f9;
+    padding: 12px 18px;
+    border-radius: 14px;
+    max-width: 75%;
+    word-break: break-word; /* Lambe words me mobile UI break nahi hoga */
+}
+
+.message.user span, 
+.message.user .message-content {
+    background: #eff6ff;
+    color: #1e3a8a;
+}
+
+/* Sticky Input Bar at Bottom */
+.chat-input {
+    padding: 15px 40px;
+    background: #ffffff;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.chat-input input {
+    flex: 1;
+    height: 50px;
+    border: 1px solid #cbd5e1;
+    border-radius: 25px;
+    padding: 0 20px;
+    font-size: 15px;
+    outline: none;
+    min-width: 0; /* Flex item overflow fix */
+}
+
+.chat-input button {
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+/* -------------------------------------------------- */
+/* Mobile Responsive Fixes (Phone screens <= 768px)   */
+/* -------------------------------------------------- */
+@media (max-width: 768px) {
+    .chat-box {
+        padding: 15px 12px; /* Side padding kam taaki text area zyada mile */
+        gap: 12px;
+    }
+
+    .message {
+        gap: 8px;
+    }
+
+    .message span, 
+    .message .message-content {
+        max-width: 88%; /* Mobile screens par chat bubble thoda aur stretch hoga */
+        padding: 10px 14px;
+        font-size: 14px;
+    }
+
+    .chat-input {
+        padding: 10px 12px; /* Phone me input box space kam lega */
+    }
+
+    .chat-input input {
+        height: 44px;
+        padding: 0 16px;
+        font-size: 14px;
+    }
+
+    .chat-input button {
+        width: 44px;
+        height: 44px;
+    }
 }
